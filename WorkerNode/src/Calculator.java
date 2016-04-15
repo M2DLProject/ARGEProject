@@ -2,7 +2,7 @@ public class Calculator {
 	public int add(int i1, int i2) {
 
 		try {
-			Thread.sleep(1000); // 1000 milliseconds is one second.
+			Thread.sleep(5000); // 1000 milliseconds is one second.
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}

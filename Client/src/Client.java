@@ -11,7 +11,7 @@ public class Client {
 
 		String ip = "127.0.0.1";
 		String port = "8081";
-		Integer calls = 5;
+		Integer calls = 10;
 
 		// create configuration
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();

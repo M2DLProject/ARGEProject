@@ -43,4 +43,14 @@ public class Server {
 		System.out.println("Worker is started!");
 
 	}
+
+	public int add(int i1, int i2) {
+
+		try {
+			Thread.sleep(2000); // 1000 milliseconds is one second.
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+		return i1 + i2 + 10;
+	}
 }

@@ -4,41 +4,66 @@ import java.util.List;
 
 public class RepartiteurHelper {
 
-	private Integer count = 0;
-
-	public static RepartiteurHelper instance = null;
-
 	public List<WorkerNode> workerNodes = new ArrayList<WorkerNode>();
-
-	public static RepartiteurHelper getInstance() throws MalformedURLException {
-		if (instance == null) {
-
-			instance = new RepartiteurHelper();
-
-		}
-		return instance;
-	}
 
 	public RepartiteurHelper() throws MalformedURLException {
 
 		System.out.println("Repartiteur is started!");
+		workerNodes.add(new WorkerNode());
+		workerNodes.add(new WorkerNode());
+	}
+
+	private Integer count = 0;
+
+	public WorkerNode getFreeWN() {
+
+		return workerNodes.get(count % workerNodes.size());
 
 	}
 
-	public Boolean needANewVM() {
-		return true;
+	public synchronized WorkerNode getWN() {
+
+		count++;
+
+		WorkerNode freeWN = getFreeWN();
+
+		return freeWN;
 	}
 
 	public Integer callMethod(String method, Object[] params) {
 
-		if (needANewVM()) {
-			WorkerNode workerNode = new WorkerNode();
-			workerNodes.add(workerNode);
-		}
-
-		WorkerNode lastVM = workerNodes.get(workerNodes.size() - 1);
+		WorkerNode lastVM = getWN();
 		// wait until worker is ready
-		return lastVM.callMethod(method, params);
+		// System.out.println("vm " + workerNodes.indexOf(lastVM));
+		Integer res = lastVM.callMethod(method, params);
+		// lastVM.removeCharge();
+		return res;
+
+	}
+
+	public synchronized void addWN(String ip, String port) {
+		WorkerNode w = new WorkerNode();
+		w.setIp(ip);
+		w.setPort(port);
+		workerNodes.add(w);
+		System.out.println("VM created " + workerNodes.size());
+
+	}
+
+	public synchronized void delWN(String ip, String port) {
+		Integer idToDelete = null;
+		for (int i = 0; i < workerNodes.size(); i++) {
+			WorkerNode worker = workerNodes.get(i);
+			if (worker.getIp().equals(ip) && worker.getPort().equals(port)) {
+				idToDelete = i;
+
+			}
+		}
+		if (idToDelete != null) {
+			workerNodes.remove(idToDelete);
+			System.out.println("workernode deleted" + idToDelete);
+
+		}
 
 	}
 
