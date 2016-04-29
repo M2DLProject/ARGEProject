@@ -50,9 +50,8 @@ public class update_repartiteur {
 				.credentials("ens25", "GOJF00").tenantName("service").authenticate();
 
 		// Create a Server Model Object
-		ServerCreate sc = Builders.server().name("ubuntuDoom1").flavor("m1.small").image("doomVM")
-				.addSecurityGroup("default").n
-						.addPersonality("/etc/motd", "Welcome to the new VM! Restricted access only").build();
+		ServerCreate sc = Builders.server().name("ubuntuDoom1").flavor("m1.small").image("7628eed5-8773-46f9-9ddd-a8d26c532d71")
+				.addSecurityGroup("default").keypairName("dylanKey").build();
 
 		// Boot the Server
 		Server server = os.compute().servers().boot(sc);
