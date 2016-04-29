@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -5,6 +6,11 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
+import org.openstack4j.api.Builders;
+import org.openstack4j.api.OSClient;
+import org.openstack4j.model.compute.Server;
+import org.openstack4j.model.compute.ServerCreate;
+import org.openstack4j.openstack.OSFactory;
 
 public class update_repartiteur {
 
@@ -25,7 +31,7 @@ public class update_repartiteur {
 		}
 	}
 
-	public static void addWN(String ipR, String portR, String ip, String port) throws MalformedURLException {
+	public static void addWN(String ipR, String portR, String ip, String port) throws IOException {
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
 		config.setEnabledForExtensions(true);
@@ -38,6 +44,18 @@ public class update_repartiteur {
 		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
 		// set configuration
 		client.setConfig(config);
+
+		// Création vm
+		OSClient os = OSFactory.builder().endpoint("http://cloudmip.univ-tlse3.fr:5000/v2.0")
+				.credentials("ens25", "GOJF00").tenantName("service").authenticate();
+
+		// Create a Server Model Object
+		ServerCreate sc = Builders.server().name("ubuntuDoom1").flavor("m1.small").image("doomVM")
+				.addSecurityGroup("default").n
+						.addPersonality("/etc/motd", "Welcome to the new VM! Restricted access only").build();
+
+		// Boot the Server
+		Server server = os.compute().servers().boot(sc);
 
 		Object[] params = new Object[] { new String(ip), new String(port) };
 		Integer result = null;
