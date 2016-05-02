@@ -60,8 +60,8 @@ public class update_repartiteur {
 		System.out.println("Connexion Cloud Mip");
 
 		// Create a Server Model Object
-		ServerCreate sc = Builders.server().name("ubuntuDoom1").flavor("m1.small")
-				.image("7628eed5-8773-46f9-9ddd-a8d26c532d71").addSecurityGroup("default").keypairName("dylanKey")
+		ServerCreate sc = Builders.server().name("doomWN1").flavor("m1.small")
+				.image("545f176d-54f8-4bad-93f2-a285870482f4").addSecurityGroup("default").keypairName("dylanKey")
 				.build();
 
 		System.out.println("Create VM");
