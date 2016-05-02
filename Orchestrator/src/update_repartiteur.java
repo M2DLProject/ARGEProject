@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -8,6 +9,8 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient;
+import org.openstack4j.api.exceptions.AuthenticationException;
+import org.openstack4j.core.transport.Config;
 import org.openstack4j.model.compute.Server;
 import org.openstack4j.model.compute.ServerCreate;
 import org.openstack4j.openstack.OSFactory;
@@ -31,7 +34,8 @@ public class update_repartiteur {
 		}
 	}
 
-	public static void addWN(String ipR, String portR, String ip, String port) throws IOException {
+	public static void addWN(String ipR, String portR, String ip, String port)
+			throws IOException, AuthenticationException, NoSuchAlgorithmException {
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
 		config.setEnabledForExtensions(true);
@@ -45,13 +49,22 @@ public class update_repartiteur {
 		// set configuration
 		client.setConfig(config);
 
+		System.out.println("Init");
+
 		// Création vm
-		OSClient os = OSFactory.builder().endpoint("http://cloudmip.univ-tlse3.fr:5000/v2.0")
-				.credentials("ens25", "GOJF00").tenantName("service").authenticate();
+		Config c = Config.newConfig().withConnectionTimeout(10);
+
+		OSClient os = OSFactory.builder().endpoint("http://195.220.53.61:5000/v2.0").credentials("ens25", "GOJF00")
+				.tenantName("service").authenticate();
+
+		System.out.println("Connexion Cloud Mip");
 
 		// Create a Server Model Object
-		ServerCreate sc = Builders.server().name("ubuntuDoom1").flavor("m1.small").image("7628eed5-8773-46f9-9ddd-a8d26c532d71")
-				.addSecurityGroup("default").keypairName("dylanKey").build();
+		ServerCreate sc = Builders.server().name("ubuntuDoom1").flavor("m1.small")
+				.image("7628eed5-8773-46f9-9ddd-a8d26c532d71").addSecurityGroup("default").keypairName("dylanKey")
+				.build();
+
+		System.out.println("Create VM");
 
 		// Boot the Server
 		Server server = os.compute().servers().boot(sc);
