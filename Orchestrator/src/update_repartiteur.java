@@ -70,7 +70,7 @@ public class update_repartiteur {
 		List<String> network = new ArrayList<>();
 		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
 
-		ServerCreate serverCreate = Builders.server().name("doomWN1" + new Date().getTime()).flavor("2")
+		ServerCreate serverCreate = Builders.server().name("doomWN1" + new Date().getTime()).flavor("m1.small")
 				.image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
 
 		System.out.println("Create VM");
