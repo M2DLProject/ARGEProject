@@ -1,3 +1,4 @@
+mkdir bin
 rm -R -- bin/*
 javac -cp "libs/*" src/* -d bin
 #java -cp "libs/*:bin" update_repartiteur 127.0.0.1 8081 add 127.0.0.1 2012
@@ -5,7 +6,7 @@ javac -cp "libs/*" src/* -d bin
 echo " "
 echo "-------------------------------------------------------";
 echo "1) update_repartiteur 127.0.0.1 8081 add 127.0.0.1 2012";
-echo "2) update_repartiteur 127.0.0.1 8081 del 127.0.0.1 2012";
+echo "2) update_repartiteur 127.0ls.0.1 8081 del 127.0.0.1 2012";
 
 read -p "What? " yn
 case $yn in
