@@ -142,6 +142,7 @@ public class update_repartiteur {
 				System.out.println("WN supprime "+wNodeId);
 				isFound = true;		
 			}
+			it++;
 		}
 		System.out.println("fin de suppression");
 		/*Object[] params = new Object[] { new String(ip), new String(port) };
