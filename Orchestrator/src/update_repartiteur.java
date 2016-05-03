@@ -3,6 +3,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.xmlrpc.XmlRpcException;
@@ -66,7 +67,7 @@ public class update_repartiteur {
 		List<String> network = new ArrayList<>();
 		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
 
-		ServerCreate serverCreate = Builders.server().name("doomWN2").flavor("2")
+		ServerCreate serverCreate = Builders.server().name("doomWN2" + new Date().getTime()).flavor("2")
 				.image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
 
 		System.out.println("Create VM");
@@ -81,6 +82,8 @@ public class update_repartiteur {
 		}
 
 		NetFloatingIP netFloatingIP = os.networking().floatingip().get(floatingip.getId());
+
+		System.out.println("neutron floatingip-create public = " + netFloatingIP.getFloatingIpAddress());
 		os.compute().floatingIps().addFloatingIP(server, netFloatingIP.getFloatingIpAddress());
 
 		System.out.println("Associate VM to ip");
