@@ -13,8 +13,10 @@ import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient;
 import org.openstack4j.api.exceptions.AuthenticationException;
 import org.openstack4j.core.transport.Config;
+import org.openstack4j.model.compute.FloatingIP;
 import org.openstack4j.model.compute.Server;
 import org.openstack4j.model.compute.ServerCreate;
+import org.openstack4j.model.network.NetFloatingIP;
 import org.openstack4j.openstack.OSFactory;
 
 public class update_repartiteur {
@@ -64,27 +66,34 @@ public class update_repartiteur {
 		List<String> network = new ArrayList<>();
 		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
 
-		ServerCreate serverCreate = Builders.server().name("doomWN1").flavor("2")
+		ServerCreate serverCreate = Builders.server().name("doomWN2").flavor("2")
 				.image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
 
 		System.out.println("Create VM");
 
 		Server server = os.compute().servers().boot(serverCreate);
 
-		os.compute().floatingIps().addFloatingIP(server, "10.0.0.98");
+		FloatingIP floatingip = null;
+		for (FloatingIP ipi : os.compute().floatingIps().list()) {
+			if (ipi.getFixedIpAddress() == null) {
+				floatingip = ipi;
+			}
+		}
+
+		NetFloatingIP netFloatingIP = os.networking().floatingip().get(floatingip.getId());
+		os.compute().floatingIps().addFloatingIP(server, netFloatingIP.getFloatingIpAddress());
 
 		System.out.println("Associate VM to ip");
 
 		// Boot the Server
 
-		Object[] params = new Object[] { new String(ip), new String(port) };
-		Integer result = null;
-		try {
-			result = (Integer) client.execute("Repartiteur.addWN", params);
-		} catch (XmlRpcException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// Object[] params = new Object[] { new String(ip), new String(port) };
+		// Integer result = null;
+		// try {
+		// result = (Integer) client.execute("Repartiteur.addWN", params);
+		// } catch (XmlRpcException e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	public static void delWN(String ipR, String portR, String ip, String port) throws MalformedURLException {
