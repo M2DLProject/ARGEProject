@@ -1,4 +1,5 @@
-mkdir bin
+git pull
+mkdir -p bin
 rm -R -- bin/*
 javac -cp "libs/*" src/* -d bin
 #java -cp "libs/*:bin" update_repartiteur 127.0.0.1 8081 add 127.0.0.1 2012
