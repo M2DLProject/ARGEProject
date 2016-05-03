@@ -3,7 +3,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.xmlrpc.XmlRpcException;
@@ -62,21 +61,21 @@ public class update_repartiteur {
 
 		System.out.println("Connexion Cloud Mip");
 
-		// Create a Server Model Object
-		// ServerCreate sc = Builders.server().name("doomWN1").flavor("2")
-		// .addNetworkPort("c1445469-4640-4c5a-ad86-9c0cb6650cca").image("545f176d-54f8-4bad-93f2-a285870482f4")
-		// .addSecurityGroup("default").keypairName("dylanKey").build();
-
 		List<String> network = new ArrayList<>();
 		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
 
-		ServerCreate serverCreate = Builders.server().name("doomWN1" + new Date().getTime()).flavor("2")
+		ServerCreate serverCreate = Builders.server().name("doomWN1").flavor("2")
 				.image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
 
 		System.out.println("Create VM");
 
-		// Boot the Server
 		Server server = os.compute().servers().boot(serverCreate);
+
+		os.compute().floatingIps().addFloatingIP(server, "10.0.0.98");
+
+		System.out.println("Associate VM to ip");
+
+		// Boot the Server
 
 		Object[] params = new Object[] { new String(ip), new String(port) };
 		Integer result = null;
