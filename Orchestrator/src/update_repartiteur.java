@@ -138,7 +138,7 @@ public class update_repartiteur {
 			if(servers.get(it).getAccessIPv4().equals(ip)) {
 				String wNodeId = servers.get(it).getId();
 				os.compute().servers().delete(wNodeId);
-				System.out.println("WN supprimé "+wNodeId);
+				System.out.println("WN supprime "+wNodeId);
 				isFound = true;		
 			}
 		}
