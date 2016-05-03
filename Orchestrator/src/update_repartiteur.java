@@ -135,8 +135,8 @@ public class update_repartiteur {
 		boolean isFound = false;
 		int it = 0;
 		while(!isFound && it < servers.size()){
-			System.out.println(it+" "+servers.get(it).getAddresses().getAddresses().toString());
-			if(servers.get(it).getAccessIPv4().equals(ip)) {
+			//System.out.println(it+" "+servers.get(it).getAddresses().getAddresses().toString().contains(ip));
+			if(servers.get(it).getAddresses().getAddresses().toString().contains(ip)) {
 				String wNodeId = servers.get(it).getId();
 				os.compute().servers().delete(wNodeId);
 				System.out.println("WN supprime "+wNodeId);
