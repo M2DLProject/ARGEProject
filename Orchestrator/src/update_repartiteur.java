@@ -123,15 +123,34 @@ public class update_repartiteur {
 		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
 		// set configuration
 		client.setConfig(config);
+		
+		OSClient os = OSFactory.builder().endpoint("http://195.220.53.61:5000/v2.0").credentials("ens25", "GOJF00")
+				.tenantName("service").authenticate();
 
-		Object[] params = new Object[] { new String(ip), new String(port) };
+		System.out.println("Connexion Cloud Mip");
+		
+		// List all Servers
+		List<? extends Server> servers = os.compute().servers().list();
+		
+		boolean isFound = false;
+		int it = 0;
+		while(!isFound && it < servers.size()){
+			if(servers.get(it).getAccessIPv4().equals(ip)) {
+				String wNodeId = servers.get(it).getId();
+				os.compute().servers().delete(wNodeId);
+				System.out.println("WN supprimé "+wNodeId);
+				isFound = true;		
+			}
+		}
+
+		/*Object[] params = new Object[] { new String(ip), new String(port) };
 		Integer result = null;
 		try {
 			result = (Integer) client.execute("Repartiteur.delWN", params);
 		} catch (XmlRpcException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 }
