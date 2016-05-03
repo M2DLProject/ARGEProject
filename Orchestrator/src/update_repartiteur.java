@@ -57,7 +57,7 @@ public class update_repartiteur {
 
 		System.out.println("Init");
 
-		// Création vm
+		// Creation vm
 		Config c = Config.newConfig().withConnectionTimeout(10);
 
 		OSClient os = OSFactory.builder().endpoint("http://195.220.53.61:5000/v2.0").credentials("ens25", "GOJF00")
