@@ -16,6 +16,7 @@ import org.openstack4j.api.exceptions.AuthenticationException;
 import org.openstack4j.core.transport.Config;
 import org.openstack4j.model.compute.FloatingIP;
 import org.openstack4j.model.compute.Server;
+import org.openstack4j.model.compute.Server.Status;
 import org.openstack4j.model.compute.ServerCreate;
 import org.openstack4j.model.network.NetFloatingIP;
 import org.openstack4j.openstack.OSFactory;
@@ -85,6 +86,15 @@ public class update_repartiteur {
 
 		System.out.println("neutron floatingip-create public = " + netFloatingIP.getFloatingIpAddress());
 		os.compute().floatingIps().addFloatingIP(server, netFloatingIP.getFloatingIpAddress());
+
+		System.out.println("Waiting the server...");
+		while (!os.compute().servers().get(server.getId()).getStatus().equals(Status.ACTIVE)) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 
 		System.out.println("Associate VM to ip");
 		System.out.println("[" + server.getName() + "]" + netFloatingIP.getFloatingIpAddress());
