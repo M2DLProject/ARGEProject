@@ -87,6 +87,7 @@ public class update_repartiteur {
 		os.compute().floatingIps().addFloatingIP(server, netFloatingIP.getFloatingIpAddress());
 
 		System.out.println("Associate VM to ip");
+		System.out.println("[" + server.getName() + "]" + netFloatingIP.getFloatingIpAddress());
 
 		// Boot the Server
 
