@@ -113,6 +113,8 @@ public class update_repartiteur {
 	}
 
 	public static void delWN(String ipR, String portR, String ip, String port) throws MalformedURLException {
+		System.out.println("./update_repartiteur " + ipR + " " + portR + " del " + ip + " " + port + "");
+
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
 		config.setEnabledForExtensions(true);

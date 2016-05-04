@@ -38,11 +38,19 @@ public class Orchestrator {
 			System.out.print("VM IP: ");
 			String vmIP = scanner.next();
 			System.out.print("VM PORT: ");
-			String vmPort = scanner.nextLine();
+			String vmPort = scanner.next();
 			update_repartiteur.addWN(repartiteurIP, repartiteurP, vmIP, vmPort);
 		}
 		if (n == 2) {
-			update_repartiteur.delWN("127.0.0.1", "8081", "127.0.0.1", "2012");
+			System.out.print("Repartiteur IP: ");
+			String repartiteurIP = scanner.next();
+			System.out.print("Repartiteur PORT: ");
+			String repartiteurP = scanner.next();
+			System.out.print("VM IP: ");
+			String vmIP = scanner.next();
+			System.out.print("VM PORT: ");
+			String vmPort = scanner.next();
+			update_repartiteur.delWN(repartiteurIP, repartiteurP, vmIP, vmPort);
 		}
 		if (n == 3) {
 			status.getServers();
