@@ -19,8 +19,9 @@ public class status {
 
 		int it = 0;
 		while (it < servers.size()) {
-			String wNodeId = servers.get(it).getId();
-			System.out.println(wNodeId);
+			String wNodeIP = servers.get(it).getAccessIPv4();
+			String wNodeName = servers.get(it).getInstanceName();
+			System.out.println(wNodeName + " " + wNodeIP);
 		}
 
 	}
