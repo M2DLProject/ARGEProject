@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
@@ -42,6 +41,9 @@ public class update_repartiteur {
 
 	public static void addWN(String ipR, String portR, String ip, String port)
 			throws IOException, AuthenticationException, NoSuchAlgorithmException {
+
+		System.out.println("./update_repartiteur " + ipR + " " + portR + " add " + ip + " " + port + "");
+
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
 		config.setEnabledForExtensions(true);
@@ -123,35 +125,33 @@ public class update_repartiteur {
 		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
 		// set configuration
 		client.setConfig(config);
-		
+
 		OSClient os = OSFactory.builder().endpoint("http://195.220.53.61:5000/v2.0").credentials("ens25", "GOJF00")
 				.tenantName("service").authenticate();
 
 		System.out.println("Connexion Cloud Mip");
-		
+
 		// List all Servers
 		List<? extends Server> servers = os.compute().servers().list();
-		
+
 		boolean isFound = false;
 		int it = 0;
-		while(!isFound && it < servers.size()){
-			if(servers.get(it).getAddresses().getAddresses().toString().contains(ip)) {
+		while (!isFound && it < servers.size()) {
+			if (servers.get(it).getAddresses().getAddresses().toString().contains(ip)) {
 				String wNodeId = servers.get(it).getId();
 				os.compute().servers().delete(wNodeId);
-				System.out.println("WN supprime "+wNodeId);
-				isFound = true;		
+				System.out.println("WN supprime " + wNodeId);
+				isFound = true;
 			}
 			it++;
 		}
 		System.out.println("fin de suppression");
-		/*Object[] params = new Object[] { new String(ip), new String(port) };
-		Integer result = null;
-		try {
-			result = (Integer) client.execute("Repartiteur.delWN", params);
-		} catch (XmlRpcException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		/*
+		 * Object[] params = new Object[] { new String(ip), new String(port) };
+		 * Integer result = null; try { result = (Integer)
+		 * client.execute("Repartiteur.delWN", params); } catch (XmlRpcException
+		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
+		 */
 
 	}
 }

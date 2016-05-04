@@ -26,11 +26,17 @@ public class Orchestrator {
 		System.out.println("2) delete VM");
 		System.out.println("3) servers list");
 		System.out.println("What ?");
-		Scanner reader = new Scanner(System.in);
-		int n = reader.nextInt();
+		Scanner scanner = new Scanner(System.in);
+		int n = scanner.nextInt();
 
 		if (n == 1) {
-			update_repartiteur.addWN("127.0.0.1 8081", "8081", "127.0.0.1", "2012");
+
+			System.out.print("Repartiteur IP PORT: ");
+			String repartiteur = scanner.next();
+			System.out.print("VM IP PORT: ");
+			String vm = scanner.next();
+			update_repartiteur.addWN(repartiteur.split(" ")[0], repartiteur.split(" ")[1], vm.split(" ")[0],
+					vm.split(" ")[1]);
 		}
 		if (n == 2) {
 			update_repartiteur.delWN("127.0.0.1 8081", "8081", "127.0.0.1", "2012");
