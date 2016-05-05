@@ -82,7 +82,7 @@ public class update_repartiteur {
 		System.out.println("OK");
 
 		// Create VM
-		System.out.println("Create VM...");
+		System.out.print("Create VM...");
 		List<String> network = new ArrayList<>();
 		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
 
