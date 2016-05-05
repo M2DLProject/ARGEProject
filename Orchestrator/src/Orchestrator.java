@@ -88,7 +88,7 @@ public class Orchestrator {
 		OSClient os = OSFactory.builder().endpoint("http://195.220.53.61:5000/v2.0").credentials("ens25", "GOJF00")
 				.tenantName("service").authenticate();
 
-		System.out.print("OK");
+		System.out.println("OK");
 		return os;
 	}
 
@@ -165,7 +165,7 @@ public class Orchestrator {
 	private static String getServerIP(Server server, TypeIP typeIP) {
 		Map<String, List<? extends Address>> adrMap = server.getAddresses().getAddresses();
 
-		return adrMap.get("private").get(typeIP.toValue()).toString();
+		return adrMap.get("private").get(typeIP.toValue()).getAddr().toString();
 	}
 
 	/*
