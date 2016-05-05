@@ -27,7 +27,10 @@ public class status {
 			String wNodeName = server.getName();
 
 			Map<String, List<? extends Address>> adrMap = server.getAddresses().getAddresses();
-			wNodeIP = adrMap.toString();
+
+			for (Address a : adrMap.get("private")) {
+				wNodeIP += a.getAddr() + "; ";
+			}
 			System.out.println(wNodeName + " : " + wNodeIP);
 			it++;
 		}
