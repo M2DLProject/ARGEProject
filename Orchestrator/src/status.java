@@ -15,13 +15,14 @@ public class status {
 		System.out.println("Server List");
 
 		// List all Servers
-		List<? extends Server> servers = os.compute().servers().list();
+		List<? extends Server> servers = os.compute().servers().list(false);
 
 		int it = 0;
 		while (it < servers.size()) {
-			String wNodeIP = servers.get(it).getAccessIPv4();
-			String wNodeName = servers.get(it).getInstanceName();
-			System.out.println(wNodeName + " " + wNodeIP);
+			String wNodeIP = servers.get(it).getAccessIPv6();
+			String wNodeName = servers.get(it).getName();
+			System.out.println(wNodeName + " " + wNodeIP + " " + servers.get(it).getAddresses().toString());
+
 		}
 
 	}
