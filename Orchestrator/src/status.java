@@ -27,7 +27,7 @@ public class status {
 			String wNodeName = server.getName();
 
 			Map<String, List<? extends Address>> adrMap = server.getAddresses().getAddresses();
-			wNodeIP = adrMap.get("fixed").toString();
+			wNodeIP = adrMap.toString();
 			System.out.println(wNodeName + " : " + wNodeIP);
 			it++;
 		}
