@@ -46,7 +46,7 @@ public class update_repartiteur {
 		// set configuration
 		client.setConfig(config);
 
-		Object[] params = new Object[] { new String(""), new String("") };
+		Object[] params = new Object[] {};
 		Integer result = null;
 		try {
 			result = (Integer) client.execute("Repartiteur.restart", params);
