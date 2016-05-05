@@ -22,7 +22,7 @@ public class status {
 			String wNodeIP = servers.get(it).getAccessIPv6();
 			String wNodeName = servers.get(it).getName();
 			System.out.println(wNodeName + " " + wNodeIP + " " + servers.get(it).getAddresses().toString());
-
+			it++;
 		}
 
 	}
