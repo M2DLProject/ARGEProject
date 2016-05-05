@@ -1,3 +1,4 @@
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -78,7 +79,7 @@ public class Orchestrator {
 			update_repartiteur.delWN(repartiteurIP, repartiteurP, ip, port);
 		}
 		if (n == 3) {
-			status.getServers();
+			getServerList();
 		}
 
 		if (n == 4) {
@@ -88,6 +89,8 @@ public class Orchestrator {
 		if (n == 5) {
 			deleteAllWN();
 		}
+
+		manuel();
 
 	}
 
@@ -192,6 +195,31 @@ public class Orchestrator {
 		Map<String, List<? extends Address>> adrMap = server.getAddresses().getAddresses();
 
 		return adrMap.get("private").get(typeIP.toValue()).getAddr().toString();
+	}
+
+	public static void getServerList() throws MalformedURLException {
+
+		System.out.println("Server List");
+
+		// List all Servers
+		List<? extends Server> servers = os.compute().servers().list();
+
+		int it = 0;
+		while (it < servers.size()) {
+
+			Server server = os.compute().servers().get(servers.get(it).getId());
+			String wNodeIP = "";
+			String wNodeName = server.getName();
+
+			Map<String, List<? extends Address>> adrMap = server.getAddresses().getAddresses();
+
+			for (Address a : adrMap.get("private")) {
+				wNodeIP += a.getAddr() + "; ";
+			}
+			System.out.println(" - " + wNodeName + " : " + wNodeIP);
+			it++;
+		}
+
 	}
 
 	/*
