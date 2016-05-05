@@ -102,12 +102,13 @@ public class update_repartiteur {
 		// set configuration
 		client.setConfig(config);
 
-		/*
-		 * Object[] params = new Object[] { new String(ip), new String(port) };
-		 * Integer result = null; try { result = (Integer)
-		 * client.execute("Repartiteur.delWN", params); } catch (XmlRpcException
-		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
-		 */
+		Object[] params = new Object[] { new String(ip), new String(port) };
+		Integer result = null;
+		try {
+			result = (Integer) client.execute("Repartiteur.delWN", params);
+		} catch (XmlRpcException e) {
+			e.printStackTrace();
+		}
 
 	}
 }

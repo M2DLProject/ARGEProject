@@ -122,9 +122,9 @@ public class RepartiteurHelper {
 		}
 		if (idToDelete != null) {
 			workerNodes.remove(idToDelete);
-			System.out.println("workernode deleted" + idToDelete);
-
+			updateWNBase();
 		}
+
 		System.out.println("Remove Node : " + ip + ":" + port);
 
 	}
