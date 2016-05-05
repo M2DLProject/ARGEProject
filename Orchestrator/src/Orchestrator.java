@@ -32,16 +32,11 @@ public class Orchestrator {
 
 		if (n == 1) {
 
-			System.out.print("Repartiteur IP (type 'ok' for 195.220.53.33): ");
-			String repartiteurIP = scanner.next();
-			System.out.print("Repartiteur PORT (type 'ok' for 8081): ");
-			String repartiteurP = scanner.next();
-			if (repartiteurIP == "ok") {
-				repartiteurIP = "195.220.53.33";
-			}
-			if (repartiteurP == "ok") {
-				repartiteurP = "8081";
-			}
+			String repartiteurIP = "192.168.0.114";
+			String repartiteurP = "8081";
+
+			System.out.print("Repartiteur IP : " + repartiteurIP);
+			System.out.print("Repartiteur PORT : " + repartiteurP);
 
 			System.out.print("VM IP: ");
 			String vmIP = scanner.next();
@@ -50,16 +45,11 @@ public class Orchestrator {
 			update_repartiteur.addWN(repartiteurIP, repartiteurP, vmIP, vmPort);
 		}
 		if (n == 2) {
-			System.out.print("Repartiteur IP (192.168.0.114): ");
-			String repartiteurIP = scanner.next();
-			System.out.print("Repartiteur PORT (8081): ");
-			String repartiteurP = scanner.next();
-			if (repartiteurIP == "") {
-				repartiteurIP = "192.168.0.114";
-			}
-			if (repartiteurP == "") {
-				repartiteurP = "8081";
-			}
+			String repartiteurIP = "192.168.0.114";
+			String repartiteurP = "8081";
+
+			System.out.print("Repartiteur IP : " + repartiteurIP);
+			System.out.print("Repartiteur PORT : " + repartiteurP);
 
 			System.out.print("VM IP: ");
 			String vmIP = scanner.next();
