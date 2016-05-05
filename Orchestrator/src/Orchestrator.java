@@ -39,6 +39,7 @@ public class Orchestrator {
 		System.out.println("2) delete VM");
 		System.out.println("3) servers list");
 		System.out.println("4) Test XMLRPC");
+		System.out.println("5) Delete all workernodes");
 		System.out.println("What ?");
 		Scanner scanner = new Scanner(System.in);
 		int n = scanner.nextInt();
@@ -52,8 +53,8 @@ public class Orchestrator {
 
 			Map<String, String> params = createVM();
 
-			System.out.print("VM IP: " + params.get("ip"));
-			System.out.print("VM PORT: " + params.get("port"));
+			System.out.println("VM IP: " + params.get("ip"));
+			System.out.println("VM PORT: " + params.get("port"));
 
 			update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
 		}
@@ -66,8 +67,8 @@ public class Orchestrator {
 			System.out.print("IP to delete? ");
 			String ip = scanner.next();
 			String port = "8081";
-			System.out.print("VM IP: " + ip);
-			System.out.print("VM PORT: " + port);
+			System.out.println("VM IP: " + ip);
+			System.out.println("VM PORT: " + port);
 
 			deleteVM(ip);
 
@@ -79,6 +80,10 @@ public class Orchestrator {
 
 		if (n == 4) {
 			update_repartiteur.fakeAddWN("192.168.0.114", "8081");
+		}
+
+		if (n == 5) {
+			deleteAllWN();
 		}
 
 	}
@@ -112,6 +117,27 @@ public class Orchestrator {
 			it++;
 		}
 		System.out.println("Finish");
+	}
+
+	public static void deleteAllWN() {
+
+		OSClient os = connnexionCloudMip();
+
+		List<? extends Server> servers = os.compute().servers().list();
+
+		int it = 0;
+		while (it < servers.size()) {
+
+			Server server = os.compute().servers().get(servers.get(it).getId());
+
+			if (server.getName().contains("doom_WN_")) {
+				String ip = getServerIP(server, TypeIP.Private);
+				deleteVM(ip);
+				System.out.println("Delete WN : " + ip);
+			}
+
+			it++;
+		}
 	}
 
 	public static Map<String, String> createVM() {
