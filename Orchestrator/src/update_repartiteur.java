@@ -28,7 +28,7 @@ public class update_repartiteur {
 		}
 	}
 
-	public static void fakeAddWN(String ipR, String portR)
+	public static void restartRepartiteur(String ipR, String portR)
 			throws IOException, AuthenticationException, NoSuchAlgorithmException {
 		// Connect to repartiteur
 		System.out.println("Call XMLRPC...");
@@ -49,7 +49,7 @@ public class update_repartiteur {
 		Object[] params = new Object[] { new String(""), new String("") };
 		Integer result = null;
 		try {
-			result = (Integer) client.execute("Repartiteur.addWN", params);
+			result = (Integer) client.execute("Repartiteur.restart", params);
 		} catch (XmlRpcException e) {
 			e.printStackTrace();
 		}

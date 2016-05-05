@@ -68,4 +68,9 @@ public class Repartiteur {
 		return 1;
 	}
 
+	public int restart() {
+		repartiteurHelper.restart();
+		return 1;
+	}
+
 }

@@ -41,7 +41,7 @@ public class Orchestrator {
 		System.out.println("1) add VM");
 		System.out.println("2) delete VM");
 		System.out.println("3) servers list");
-		System.out.println("4) Test XMLRPC");
+		System.out.println("4) Restart Repartiteur (XMLRPC)");
 		System.out.println("5) Delete all workernodes");
 		System.out.print("What ? ");
 		Scanner scanner = new Scanner(System.in);
@@ -69,7 +69,7 @@ public class Orchestrator {
 			System.out.println("Repartiteur PORT : " + repartiteurP);
 			System.out.print("IP to delete? ");
 			String ip = scanner.next();
-			String port = "8081";
+			String port = "8080";
 			System.out.println("VM IP: " + ip);
 			System.out.println("VM PORT: " + port);
 
@@ -82,7 +82,7 @@ public class Orchestrator {
 		}
 
 		if (n == 4) {
-			update_repartiteur.fakeAddWN("192.168.0.114", "8081");
+			update_repartiteur.restartRepartiteur("192.168.0.114", "8081");
 		}
 
 		if (n == 5) {

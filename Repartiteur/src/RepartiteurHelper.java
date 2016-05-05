@@ -129,4 +129,11 @@ public class RepartiteurHelper {
 
 	}
 
+	public void restart() {
+		System.out.print("Restarting... ");
+		workerNodes.clear();
+		updateWNBase();
+		System.out.println("OK ");
+	}
+
 }
