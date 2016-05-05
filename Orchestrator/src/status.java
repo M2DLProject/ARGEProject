@@ -19,9 +19,9 @@ public class status {
 
 		int it = 0;
 		while (it < servers.size()) {
-			String wNodeIP = servers.get(it).getAccessIPv6();
+			String wNodeIP = servers.get(it).getAddresses().getAddresses("private").toString();
 			String wNodeName = servers.get(it).getName();
-			System.out.println(wNodeName + " " + wNodeIP + " " + servers.get(it).getAddresses().toString());
+			System.out.println(wNodeName + " : " + wNodeIP);
 			it++;
 		}
 
