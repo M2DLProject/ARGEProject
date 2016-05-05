@@ -50,12 +50,12 @@ public class Orchestrator {
 			update_repartiteur.addWN(repartiteurIP, repartiteurP, vmIP, vmPort);
 		}
 		if (n == 2) {
-			System.out.print("Repartiteur IP (195.220.53.33): ");
+			System.out.print("Repartiteur IP (192.168.0.114): ");
 			String repartiteurIP = scanner.next();
 			System.out.print("Repartiteur PORT (8081): ");
 			String repartiteurP = scanner.next();
 			if (repartiteurIP == "") {
-				repartiteurIP = "195.220.53.33";
+				repartiteurIP = "192.168.0.114";
 			}
 			if (repartiteurP == "") {
 				repartiteurP = "8081";
