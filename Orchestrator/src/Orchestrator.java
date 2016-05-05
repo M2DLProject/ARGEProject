@@ -139,6 +139,7 @@ public class Orchestrator {
 		}
 		System.out.println("OK");
 
+		server = os.compute().servers().get(server.getId());
 		Map<String, List<? extends Address>> adrMap = server.getAddresses().getAddresses();
 
 		String ip = adrMap.get("private").get(0).getAddr().toString();
