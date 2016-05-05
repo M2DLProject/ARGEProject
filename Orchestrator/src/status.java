@@ -15,7 +15,7 @@ public class status {
 		System.out.println("Server List");
 
 		// List all Servers
-		List<? extends Server> servers = os.compute().servers().list(false);
+		List<? extends Server> servers = os.compute().servers().list();
 
 		int it = 0;
 		while (it < servers.size()) {
