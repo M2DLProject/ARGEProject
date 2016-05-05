@@ -14,11 +14,9 @@ import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient;
 import org.openstack4j.api.exceptions.AuthenticationException;
 import org.openstack4j.core.transport.Config;
-import org.openstack4j.model.compute.FloatingIP;
 import org.openstack4j.model.compute.Server;
 import org.openstack4j.model.compute.Server.Status;
 import org.openstack4j.model.compute.ServerCreate;
-import org.openstack4j.model.network.NetFloatingIP;
 import org.openstack4j.openstack.OSFactory;
 
 public class update_repartiteur {
@@ -45,7 +43,60 @@ public class update_repartiteur {
 
 		System.out.println("./update_repartiteur " + ipR + " " + portR + " add " + ip + " " + port + "");
 
+		System.out.println("Connexion to Cloud Mip...");
+
+		// Creation vm
+		Config c = Config.newConfig().withConnectionTimeout(10);
+
+		OSClient os = OSFactory.builder().endpoint("http://195.220.53.61:5000/v2.0").credentials("ens25", "GOJF00")
+				.tenantName("service").authenticate();
+
+		System.out.println("OK");
+
+		// Create VM
+		System.out.println("Create VM...");
+		List<String> network = new ArrayList<>();
+		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
+
+		ServerCreate serverCreate = Builders.server().name("doomWN2" + new Date().getTime()).flavor("2")
+				.image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
+
+		System.out.println("OK");
+
+		System.out.println("Boot VM...");
+		Server server = os.compute().servers().boot(serverCreate);
+		while (!os.compute().servers().get(server.getId()).getStatus().equals(Status.ACTIVE)) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("OK");
+
+		/*
+		 * FloatingIP floatingip = null; for (FloatingIP ipi :
+		 * os.compute().floatingIps().list()) { if (ipi.getFixedIpAddress() ==
+		 * null) { floatingip = ipi; } }
+		 * 
+		 * NetFloatingIP netFloatingIP =
+		 * os.networking().floatingip().get(floatingip.getId());
+		 * 
+		 * System.out.println("neutron floatingip-create public = " +
+		 * netFloatingIP.getFloatingIpAddress());
+		 * os.compute().floatingIps().addFloatingIP(server,
+		 * netFloatingIP.getFloatingIpAddress());
+		 * 
+		 * System.out.println("Waiting the server...");
+		 * 
+		 * System.out.println("Associate VM to ip"); System.out.println("[" +
+		 * server.getId() + "]" + netFloatingIP.getFloatingIpAddress());
+		 */
+
+		// Connect to repartiteur
+		System.out.println("Call XMLRPC...");
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+		System.out.println("http://" + ipR + ":" + portR + "/xmlrpc");
 		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
 		config.setEnabledForExtensions(true);
 		config.setConnectionTimeout(60 * 1000);
@@ -57,52 +108,6 @@ public class update_repartiteur {
 		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
 		// set configuration
 		client.setConfig(config);
-
-		System.out.println("Init");
-
-		// Creation vm
-		Config c = Config.newConfig().withConnectionTimeout(10);
-
-		OSClient os = OSFactory.builder().endpoint("http://195.220.53.61:5000/v2.0").credentials("ens25", "GOJF00")
-				.tenantName("service").authenticate();
-
-		System.out.println("Connexion Cloud Mip");
-
-		List<String> network = new ArrayList<>();
-		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
-
-		ServerCreate serverCreate = Builders.server().name("doomWN2" + new Date().getTime()).flavor("2")
-				.image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
-
-		System.out.println("Create VM");
-
-		Server server = os.compute().servers().boot(serverCreate);
-
-		FloatingIP floatingip = null;
-		for (FloatingIP ipi : os.compute().floatingIps().list()) {
-			if (ipi.getFixedIpAddress() == null) {
-				floatingip = ipi;
-			}
-		}
-
-		NetFloatingIP netFloatingIP = os.networking().floatingip().get(floatingip.getId());
-
-		System.out.println("neutron floatingip-create public = " + netFloatingIP.getFloatingIpAddress());
-		os.compute().floatingIps().addFloatingIP(server, netFloatingIP.getFloatingIpAddress());
-
-		System.out.println("Waiting the server...");
-		while (!os.compute().servers().get(server.getId()).getStatus().equals(Status.ACTIVE)) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-
-		System.out.println("Associate VM to ip");
-		System.out.println("[" + server.getId() + "]" + netFloatingIP.getFloatingIpAddress());
-
-		// Boot the Server
 
 		Object[] params = new Object[] { new String(ip), new String(port) };
 		Integer result = null;
