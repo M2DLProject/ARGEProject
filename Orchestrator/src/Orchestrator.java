@@ -15,11 +15,14 @@ import org.openstack4j.openstack.OSFactory;
 
 public class Orchestrator {
 
+	public static OSClient os;
+
 	public static void main(String[] args) throws Exception {
 
 		System.out.println("-----------------------------------------");
 		System.out.println("ORCHESTRATOR");
 		System.out.println("-----------------------------------------");
+		os = connnexionCloudMip();
 		System.out.println("");
 		System.out.println("1) Manual");
 		System.out.println("2) Auto");
@@ -99,8 +102,6 @@ public class Orchestrator {
 
 	public static void deleteVM(String ip) {
 
-		OSClient os = connnexionCloudMip();
-
 		System.out.println("Delete VM... ");
 		// List all Servers
 		List<? extends Server> servers = os.compute().servers().list();
@@ -121,8 +122,6 @@ public class Orchestrator {
 
 	public static void deleteAllWN() {
 
-		OSClient os = connnexionCloudMip();
-
 		List<? extends Server> servers = os.compute().servers().list();
 
 		int it = 0;
@@ -141,8 +140,6 @@ public class Orchestrator {
 	}
 
 	public static Map<String, String> createVM() {
-
-		OSClient os = connnexionCloudMip();
 
 		// Create VM
 		System.out.print("Create VM...");
