@@ -9,8 +9,6 @@ public class RepartiteurHelper {
 	public RepartiteurHelper() throws MalformedURLException {
 
 		System.out.println("Repartiteur is started!");
-		workerNodes.add(new WorkerNode());
-		workerNodes.add(new WorkerNode());
 	}
 
 	private Integer count = 0;
@@ -46,7 +44,7 @@ public class RepartiteurHelper {
 		w.setIp(ip);
 		w.setPort(port);
 		workerNodes.add(w);
-		System.out.println("VM created " + workerNodes.size());
+		System.out.println("Add Node : " + ip + ":" + port);
 
 	}
 
@@ -64,6 +62,7 @@ public class RepartiteurHelper {
 			System.out.println("workernode deleted" + idToDelete);
 
 		}
+		System.out.println("Remove Node : " + ip + ":" + port);
 
 	}
 

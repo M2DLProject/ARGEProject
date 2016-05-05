@@ -21,7 +21,7 @@ public class Orchestrator {
 		System.out.println("ORCHESTRATOR");
 		System.out.println("-----------------------------------------");
 		System.out.println("");
-		System.out.println("1) Manuel");
+		System.out.println("1) Manual");
 		System.out.println("2) Auto");
 		System.out.println("Mode ?");
 		Scanner reader = new Scanner(System.in);
@@ -34,7 +34,7 @@ public class Orchestrator {
 	}
 
 	public static void manuel() throws Exception {
-		System.out.println("# MANUEL");
+		System.out.println("# MANUAL");
 		System.out.println("1) add VM");
 		System.out.println("2) delete VM");
 		System.out.println("3) servers list");
@@ -140,9 +140,8 @@ public class Orchestrator {
 		System.out.println("OK");
 
 		server = os.compute().servers().get(server.getId());
-		Map<String, List<? extends Address>> adrMap = server.getAddresses().getAddresses();
 
-		String ip = adrMap.get("private").get(0).getAddr().toString();
+		String ip = getServerIP(server, TypeIP.Private);
 
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("port", "8080");
