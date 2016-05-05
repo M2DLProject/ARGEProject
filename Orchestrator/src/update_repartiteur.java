@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
@@ -103,13 +104,13 @@ public class update_repartiteur {
 
 		// Boot the Server
 
-		// Object[] params = new Object[] { new String(ip), new String(port) };
-		// Integer result = null;
-		// try {
-		// result = (Integer) client.execute("Repartiteur.addWN", params);
-		// } catch (XmlRpcException e) {
-		// e.printStackTrace();
-		// }
+		Object[] params = new Object[] { new String(ip), new String(port) };
+		Integer result = null;
+		try {
+			result = (Integer) client.execute("Repartiteur.addWN", params);
+		} catch (XmlRpcException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void delWN(String ipR, String portR, String ip, String port) throws MalformedURLException {
