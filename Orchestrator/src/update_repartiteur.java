@@ -38,12 +38,40 @@ public class update_repartiteur {
 		}
 	}
 
+	public static void fakeAddWN(String ipR, String portR)
+			throws IOException, AuthenticationException, NoSuchAlgorithmException {
+		// Connect to repartiteur
+		System.out.println("Call XMLRPC...");
+		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+		System.out.println("http://" + ipR + ":" + portR + "/xmlrpc");
+		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
+		config.setEnabledForExtensions(true);
+		config.setConnectionTimeout(60 * 1000);
+		config.setReplyTimeout(60 * 1000);
+
+		XmlRpcClient client = new XmlRpcClient();
+
+		// use Commons HttpClient as transport
+		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
+		// set configuration
+		client.setConfig(config);
+
+		Object[] params = new Object[] { new String(""), new String("") };
+		Integer result = null;
+		try {
+			result = (Integer) client.execute("Repartiteur.addWN", params);
+		} catch (XmlRpcException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public static void addWN(String ipR, String portR, String ip, String port)
 			throws IOException, AuthenticationException, NoSuchAlgorithmException {
 
 		System.out.println("./update_repartiteur " + ipR + " " + portR + " add " + ip + " " + port + "");
 
-		System.out.println("Connexion to Cloud Mip...");
+		System.out.print("Connexion to Cloud Mip...");
 
 		// Creation vm
 		Config c = Config.newConfig().withConnectionTimeout(10);
@@ -63,7 +91,7 @@ public class update_repartiteur {
 
 		System.out.println("OK");
 
-		System.out.println("Boot VM...");
+		System.out.print("Boot VM...");
 		Server server = os.compute().servers().boot(serverCreate);
 		while (!os.compute().servers().get(server.getId()).getStatus().equals(Status.ACTIVE)) {
 			try {
@@ -94,7 +122,7 @@ public class update_repartiteur {
 		 */
 
 		// Connect to repartiteur
-		System.out.println("Call XMLRPC...");
+		System.out.print("Call XMLRPC...");
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		System.out.println("http://" + ipR + ":" + portR + "/xmlrpc");
 		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));

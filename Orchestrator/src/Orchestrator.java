@@ -25,6 +25,7 @@ public class Orchestrator {
 		System.out.println("1) add VM");
 		System.out.println("2) delete VM");
 		System.out.println("3) servers list");
+		System.out.println("4) Test XMLRPC");
 		System.out.println("What ?");
 		Scanner scanner = new Scanner(System.in);
 		int n = scanner.nextInt();
@@ -68,6 +69,10 @@ public class Orchestrator {
 		}
 		if (n == 3) {
 			status.getServers();
+		}
+
+		if (n == 3) {
+			update_repartiteur.fakeAddWN("195.220.53.33", "8081");
 		}
 
 	}
