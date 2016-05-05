@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +45,68 @@ public class RepartiteurHelper {
 
 	}
 
+	public synchronized void loadWNBase() {
+
+		try {
+
+			File file = new File("dbWN.data");
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			BufferedReader br = new BufferedReader(new FileReader(file));
+
+			String sCurrentLine;
+			while ((sCurrentLine = br.readLine()) != null) {
+				String[] s = sCurrentLine.split(" ");
+				System.out.println("IP : " + s[0] + " PORT : " + s[1]);
+				WorkerNode w = new WorkerNode();
+				w.setIp(s[0]);
+				w.setPort(s[1]);
+				workerNodes.add(w);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public synchronized void updateWNBase() {
+
+		try {
+
+			File file = new File("dbWN.data");
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			String content = "";
+			for (WorkerNode w : workerNodes) {
+				content += w.getIp() + " " + w.getPort() + "\n";
+			}
+
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(content);
+			bw.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	public synchronized void addWN(String ip, String port) {
 		WorkerNode w = new WorkerNode();
 		w.setIp(ip);
 		w.setPort(port);
 		workerNodes.add(w);
+		updateWNBase();
 		System.out.println("Add Node : " + ip + ":" + port);
 
 	}

@@ -43,7 +43,7 @@ public class Orchestrator {
 		System.out.println("3) servers list");
 		System.out.println("4) Test XMLRPC");
 		System.out.println("5) Delete all workernodes");
-		System.out.println("What ?");
+		System.out.print("What ? ");
 		Scanner scanner = new Scanner(System.in);
 		int n = scanner.nextInt();
 

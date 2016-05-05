@@ -27,6 +27,8 @@ public class Repartiteur {
 		 * You may also provide the handler classes directly, like this:
 		 */
 		repartiteurHelper = new RepartiteurHelper();
+		repartiteurHelper.loadWNBase();
+
 		phm.addHandler("Repartiteur", Repartiteur.class);
 
 		xmlRpcServer.setHandlerMapping(phm);
