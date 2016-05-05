@@ -71,7 +71,7 @@ public class Orchestrator {
 			status.getServers();
 		}
 
-		if (n == 3) {
+		if (n == 4) {
 			update_repartiteur.fakeAddWN("195.220.53.33", "8081");
 		}
 
