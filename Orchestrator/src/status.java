@@ -1,7 +1,9 @@
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Map;
 
 import org.openstack4j.api.OSClient;
+import org.openstack4j.model.compute.Address;
 import org.openstack4j.model.compute.Server;
 import org.openstack4j.openstack.OSFactory;
 
@@ -21,8 +23,11 @@ public class status {
 		while (it < servers.size()) {
 
 			Server server = os.compute().servers().get(servers.get(it).getId());
-			String wNodeIP = server.getAccessIPv4();
+			String wNodeIP = "";
 			String wNodeName = server.getName();
+
+			Map<String, List<? extends Address>> adrMap = server.getAddresses().getAddresses();
+			wNodeIP = adrMap.get("fixed").toString();
 			System.out.println(wNodeName + " : " + wNodeIP);
 			it++;
 		}
