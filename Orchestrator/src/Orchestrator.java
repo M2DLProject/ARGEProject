@@ -102,7 +102,6 @@ public class Orchestrator {
 
 	public static void deleteVM(String ip) {
 
-		System.out.println("Delete VM... ");
 		// List all Servers
 		List<? extends Server> servers = os.compute().servers().list();
 
@@ -111,13 +110,14 @@ public class Orchestrator {
 		while (!isFound && it < servers.size()) {
 			if (servers.get(it).getAddresses().getAddresses().toString().contains(ip)) {
 				String wNodeId = servers.get(it).getId();
+				String name = servers.get(it).getName();
 				os.compute().servers().delete(wNodeId);
-				System.out.println("id = " + wNodeId);
+				System.out.println("Delete VM : " + name);
 				isFound = true;
 			}
 			it++;
 		}
-		System.out.println("Finish");
+
 	}
 
 	public static void deleteAllWN() {
@@ -132,7 +132,6 @@ public class Orchestrator {
 			if (server.getName().contains("doom_WN_")) {
 				String ip = getServerIP(server, TypeIP.Private);
 				deleteVM(ip);
-				System.out.println("Delete WN : " + ip);
 			}
 
 			it++;
