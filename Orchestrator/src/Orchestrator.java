@@ -34,9 +34,8 @@ public class Orchestrator {
 
 			String repartiteurIP = "192.168.0.114";
 			String repartiteurP = "8081";
-
-			System.out.print("Repartiteur IP : " + repartiteurIP);
-			System.out.print("Repartiteur PORT : " + repartiteurP);
+			System.out.println("Repartiteur IP : " + repartiteurIP);
+			System.out.println("Repartiteur PORT : " + repartiteurP);
 
 			System.out.print("VM IP: ");
 			String vmIP = scanner.next();
@@ -47,9 +46,8 @@ public class Orchestrator {
 		if (n == 2) {
 			String repartiteurIP = "192.168.0.114";
 			String repartiteurP = "8081";
-
-			System.out.print("Repartiteur IP : " + repartiteurIP);
-			System.out.print("Repartiteur PORT : " + repartiteurP);
+			System.out.println("Repartiteur IP : " + repartiteurIP);
+			System.out.println("Repartiteur PORT : " + repartiteurP);
 
 			System.out.print("VM IP: ");
 			String vmIP = scanner.next();
