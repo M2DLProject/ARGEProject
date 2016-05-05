@@ -139,9 +139,13 @@ public class Orchestrator {
 		}
 		System.out.println("OK");
 
+		Map<String, List<? extends Address>> adrMap = server.getAddresses().getAddresses();
+
+		String ip = adrMap.get("private").get(0).getAddr().toString();
+
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("port", "8080");
-		result.put("ip", getServerIP(server, TypeIP.Private));
+		result.put("ip", ip);
 
 		return result;
 
