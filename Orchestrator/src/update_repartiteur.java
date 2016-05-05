@@ -2,22 +2,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
-import org.openstack4j.api.Builders;
-import org.openstack4j.api.OSClient;
 import org.openstack4j.api.exceptions.AuthenticationException;
-import org.openstack4j.core.transport.Config;
-import org.openstack4j.model.compute.Server;
-import org.openstack4j.model.compute.Server.Status;
-import org.openstack4j.model.compute.ServerCreate;
-import org.openstack4j.openstack.OSFactory;
 
 public class update_repartiteur {
 
@@ -71,56 +61,6 @@ public class update_repartiteur {
 
 		System.out.println("./update_repartiteur " + ipR + " " + portR + " add " + ip + " " + port + "");
 
-		System.out.print("Connexion to Cloud Mip...");
-
-		// Creation vm
-		Config c = Config.newConfig().withConnectionTimeout(10);
-
-		OSClient os = OSFactory.builder().endpoint("http://195.220.53.61:5000/v2.0").credentials("ens25", "GOJF00")
-				.tenantName("service").authenticate();
-
-		System.out.println("OK");
-
-		// Create VM
-		System.out.print("Create VM...");
-		List<String> network = new ArrayList<>();
-		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
-
-		ServerCreate serverCreate = Builders.server().name("doomWN2" + new Date().getTime()).flavor("2")
-				.image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
-
-		System.out.println("OK");
-
-		System.out.print("Boot VM...");
-		Server server = os.compute().servers().boot(serverCreate);
-		while (!os.compute().servers().get(server.getId()).getStatus().equals(Status.ACTIVE)) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		System.out.println("OK");
-
-		/*
-		 * FloatingIP floatingip = null; for (FloatingIP ipi :
-		 * os.compute().floatingIps().list()) { if (ipi.getFixedIpAddress() ==
-		 * null) { floatingip = ipi; } }
-		 * 
-		 * NetFloatingIP netFloatingIP =
-		 * os.networking().floatingip().get(floatingip.getId());
-		 * 
-		 * System.out.println("neutron floatingip-create public = " +
-		 * netFloatingIP.getFloatingIpAddress());
-		 * os.compute().floatingIps().addFloatingIP(server,
-		 * netFloatingIP.getFloatingIpAddress());
-		 * 
-		 * System.out.println("Waiting the server...");
-		 * 
-		 * System.out.println("Associate VM to ip"); System.out.println("[" +
-		 * server.getId() + "]" + netFloatingIP.getFloatingIpAddress());
-		 */
-
 		// Connect to repartiteur
 		System.out.print("Call XMLRPC...");
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
@@ -162,26 +102,6 @@ public class update_repartiteur {
 		// set configuration
 		client.setConfig(config);
 
-		OSClient os = OSFactory.builder().endpoint("http://195.220.53.61:5000/v2.0").credentials("ens25", "GOJF00")
-				.tenantName("service").authenticate();
-
-		System.out.println("Connexion Cloud Mip");
-
-		// List all Servers
-		List<? extends Server> servers = os.compute().servers().list();
-
-		boolean isFound = false;
-		int it = 0;
-		while (!isFound && it < servers.size()) {
-			if (servers.get(it).getAddresses().getAddresses().toString().contains(ip)) {
-				String wNodeId = servers.get(it).getId();
-				os.compute().servers().delete(wNodeId);
-				System.out.println("WN supprime " + wNodeId);
-				isFound = true;
-			}
-			it++;
-		}
-		System.out.println("fin de suppression");
 		/*
 		 * Object[] params = new Object[] { new String(ip), new String(port) };
 		 * Integer result = null; try { result = (Integer)
