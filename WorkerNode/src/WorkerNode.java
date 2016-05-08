@@ -31,10 +31,14 @@ public class WorkerNode {
 
 	}
 
+	public int status() {
+		return 1;
+	}
+
 	public int add(int i1, int i2) {
 
 		try {
-			Thread.sleep(2000); // 1000 milliseconds is one second.
+			Thread.sleep(2000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}

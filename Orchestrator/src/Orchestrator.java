@@ -1,4 +1,5 @@
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -6,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.client.XmlRpcClient;
+import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient;
 import org.openstack4j.model.compute.Address;
@@ -141,7 +146,35 @@ public class Orchestrator {
 		}
 	}
 
-	public static Map<String, String> createVM() {
+	public static Boolean checkWNisReady(String ip, String port) throws MalformedURLException {
+
+		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+		config.setServerURL(new URL("http://" + ip + ":" + port + "/xmlrpc"));
+		config.setEnabledForExtensions(true);
+		config.setConnectionTimeout(60 * 1000);
+		config.setReplyTimeout(60 * 1000);
+
+		XmlRpcClient client = new XmlRpcClient();
+
+		// use Commons HttpClient as transport
+		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
+		// set configuration
+		client.setConfig(config);
+
+		Integer result = 0;
+		Object[] params = new Object[] {};
+		try {
+			result = (Integer) client.execute("Calculator.status", params);
+		} catch (XmlRpcException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result == 1;
+
+	}
+
+	public static Map<String, String> createVM() throws MalformedURLException {
 
 		// Create VM
 		System.out.print("Create VM...");
@@ -162,6 +195,7 @@ public class Orchestrator {
 				e.printStackTrace();
 			}
 		}
+
 		System.out.println("OK");
 
 		server = os.compute().servers().get(server.getId());
@@ -169,8 +203,19 @@ public class Orchestrator {
 		String ip = getServerIP(server, TypeIP.Private);
 
 		Map<String, String> result = new HashMap<String, String>();
-		result.put("port", "8080");
+		String port = "8080";
+		result.put("port", port);
 		result.put("ip", ip);
+
+		System.out.print("Boot Worker Node...");
+		while (!checkWNisReady(ip, port)) {
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("OK");
 
 		return result;
 
