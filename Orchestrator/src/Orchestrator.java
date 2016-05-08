@@ -265,7 +265,10 @@ public class Orchestrator {
 			for (Address a : adrMap.get("private")) {
 				wNodeIP += a.getAddr() + "; ";
 			}
-			System.out.println(" - " + wNodeName + " : " + wNodeIP);
+			if (wNodeName.contains("doom")) {
+				System.out.println(" - " + wNodeName + " : " + wNodeIP);
+			}
+
 			it++;
 		}
 
