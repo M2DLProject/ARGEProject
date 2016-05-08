@@ -28,7 +28,7 @@ public class Client {
 		client.setConfig(config);
 
 		System.out.println("=======================");
-		System.out.println("Client");
+		System.out.println("Client call " + calls + " : " + ip + " " + port);
 
 		for (int i = 0; i < calls; i++) {
 			ClientLaucher clientLaucher = new ClientLaucher();
