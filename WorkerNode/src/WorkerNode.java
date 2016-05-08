@@ -5,7 +5,7 @@ import org.apache.xmlrpc.server.XmlRpcServer;
 import org.apache.xmlrpc.server.XmlRpcServerConfigImpl;
 import org.apache.xmlrpc.webserver.WebServer;
 
-public class Server {
+public class WorkerNode {
 	private static final int port = 8080;
 
 	public static void main(String[] args) throws Exception {
@@ -17,21 +17,9 @@ public class Server {
 		XmlRpcServer xmlRpcServer = webServer.getXmlRpcServer();
 
 		PropertyHandlerMapping phm = new PropertyHandlerMapping();
-		/*
-		 * Load handler definitions from a property file. The property file
-		 * might look like: Calculator=org.apache.xmlrpc.demo.Calculator
-		 * org.apache.xmlrpc.demo.proxy.Adder=org.apache.xmlrpc.demo.proxy.
-		 * AdderImpl
-		 */
-		phm.load(Thread.currentThread().getContextClassLoader(), "XmlRpcServlet.properties");
 
-		/*
-		 * You may also provide the handler classes directly, like this:
-		 * phm.addHandler("Calculator",
-		 * org.apache.xmlrpc.demo.Calculator.class);
-		 * phm.addHandler(org.apache.xmlrpc.demo.proxy.Adder.class.getName(),
-		 * org.apache.xmlrpc.demo.proxy.AdderImpl.class);
-		 */
+		phm.addHandler("Calculator", WorkerNode.class);
+
 		xmlRpcServer.setHandlerMapping(phm);
 
 		XmlRpcServerConfigImpl serverConfig = (XmlRpcServerConfigImpl) xmlRpcServer.getConfig();
@@ -39,7 +27,6 @@ public class Server {
 		serverConfig.setContentLengthOptional(false);
 
 		webServer.start();
-
 		System.out.println("Worker is started!");
 
 	}
