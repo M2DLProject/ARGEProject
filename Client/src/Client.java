@@ -9,9 +9,9 @@ public class Client {
 
 	public static void main(String[] args) throws Exception {
 
-		String ip = "127.0.0.1";
-		String port = "8081";
-		Integer calls = 10;
+		Integer calls = Integer.parseInt(args[0]);
+		String ip = args[1];
+		String port = args[2];
 
 		// create configuration
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
