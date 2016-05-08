@@ -2,4 +2,4 @@ git pull
 mkdir -p bin
 rm -R -- bin/*
 javac -cp "libs/*" src/* -d bin
-java -cp "libs/*:bin" Client 18 192.168.0.114 8081
+java -cp "libs/*:bin" client 18 192.168.0.114 8081

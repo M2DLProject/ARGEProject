@@ -5,7 +5,7 @@ import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 
-public class Client {
+public class client {
 
 	public static void main(String[] args) throws Exception {
 
