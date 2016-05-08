@@ -163,6 +163,7 @@ public class Orchestrator {
 
 		Integer result = 0;
 		Object[] params = new Object[] {};
+		System.out.println("get status...");
 		try {
 			result = (Integer) client.execute("Calculator.status", params);
 		} catch (XmlRpcException e) {
