@@ -181,8 +181,12 @@ public class Orchestrator {
 		List<String> network = new ArrayList<>();
 		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
 
+		// ServerCreate serverCreate = Builders.server().name("doom_WN_" + new
+		// Date().getTime()).flavor("2")
+		// .image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
+
 		ServerCreate serverCreate = Builders.server().name("doom_WN_" + new Date().getTime()).flavor("2")
-				.image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
+				.image("584aa63b-f308-4ba4-b9fa-5c0e56f711e1").networks(network).build();
 
 		System.out.println("OK");
 
