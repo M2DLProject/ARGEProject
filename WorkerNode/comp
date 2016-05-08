@@ -1,0 +1,5 @@
+git pull
+mkdir -p bin
+rm -R -- bin/*
+javac -cp "libs/*" src/* -d bin
+java -cp "libs/*:bin" Server
