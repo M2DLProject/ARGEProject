@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
@@ -21,6 +22,8 @@ import org.openstack4j.openstack.OSFactory;
 public class Orchestrator {
 
 	public static OSClient os;
+
+	public static List<String> workerNodes = new ArrayList<String>();
 
 	public static void main(String[] args) throws Exception {
 
@@ -37,6 +40,67 @@ public class Orchestrator {
 
 		if (n == 1) {
 			manuel();
+		}
+
+	}
+
+	public static Integer getConnexionCount(String ipR, String portR) throws Exception {
+
+		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+
+		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
+		config.setEnabledForExtensions(true);
+		config.setConnectionTimeout(60 * 1000);
+		config.setReplyTimeout(60 * 1000);
+
+		XmlRpcClient client = new XmlRpcClient();
+
+		// use Commons HttpClient as transport
+		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
+		// set configuration
+		client.setConfig(config);
+
+		Object[] params = new Object[] {};
+		Integer result = null;
+		try {
+			result = (Integer) client.execute("Calculator.getConnexionCount", params);
+		} catch (XmlRpcException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static void auto() throws Exception {
+
+		System.out.println("#AUTO");
+
+		String repartiteurIP = "192.168.0.114";
+		String repartiteurP = "8081";
+		System.out.println("Repartiteur IP : " + repartiteurIP);
+		System.out.println("Repartiteur PORT : " + repartiteurP);
+
+		Map<String, String> params = createVM();
+
+		System.out.println("VM IP: " + params.get("ip"));
+		System.out.println("VM PORT: " + params.get("port"));
+
+		update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
+
+		while (true) {
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException ex) {
+				Thread.currentThread().interrupt();
+			}
+
+			System.out.println("Scan...");
+			for (String ip : workerNodes) {
+
+				Integer count = getConnexionCount(ip, "8080");
+				System.out.println(ip + " : " + count);
+			}
+
 		}
 
 	}
@@ -125,6 +189,8 @@ public class Orchestrator {
 			it++;
 		}
 
+		workerNodes.remove(ip);
+
 	}
 
 	public static void deleteAllWN() {
@@ -143,6 +209,7 @@ public class Orchestrator {
 
 			it++;
 		}
+
 	}
 
 	public static Boolean checkWNisReady(String ip, String port) throws MalformedURLException {
@@ -220,6 +287,8 @@ public class Orchestrator {
 			}
 		}
 		System.out.println("OK");
+
+		workerNodes.add(ip);
 
 		return result;
 

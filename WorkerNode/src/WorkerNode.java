@@ -6,7 +6,18 @@ import org.apache.xmlrpc.server.XmlRpcServerConfigImpl;
 import org.apache.xmlrpc.webserver.WebServer;
 
 public class WorkerNode {
+
 	private static final int port = 8080;
+
+	public static Integer connexionCount = 0;
+
+	public static synchronized void addConnexion() {
+		connexionCount++;
+	}
+
+	public static synchronized void removeConnexion() {
+		connexionCount--;
+	}
 
 	public static void main(String[] args) throws Exception {
 
@@ -35,13 +46,19 @@ public class WorkerNode {
 		return 1;
 	}
 
+	public int getConnexionCount() {
+		return connexionCount;
+	}
+
 	public int add(int i1, int i2) {
 
+		addConnexion();
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
+		removeConnexion();
 		return i1 + i2 + 10;
 	}
 }
