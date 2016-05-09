@@ -118,7 +118,7 @@ public class Orchestrator {
 
 		if (n == 1) {
 
-			String repartiteurIP = "192.168.0.114";
+			String repartiteurIP = "192.168.0.236";
 			String repartiteurP = "8081";
 			System.out.println("Repartiteur IP : " + repartiteurIP);
 			System.out.println("Repartiteur PORT : " + repartiteurP);
@@ -132,7 +132,7 @@ public class Orchestrator {
 		}
 
 		if (n == 2) {
-			String repartiteurIP = "192.168.0.114";
+			String repartiteurIP = "192.168.0.236";
 			String repartiteurP = "8081";
 			System.out.println("Repartiteur IP : " + repartiteurIP);
 			System.out.println("Repartiteur PORT : " + repartiteurP);
@@ -151,7 +151,7 @@ public class Orchestrator {
 		}
 
 		if (n == 4) {
-			update_repartiteur.restartRepartiteur("192.168.0.114", "8081");
+			update_repartiteur.restartRepartiteur("192.168.0.236", "8081");
 		}
 
 		if (n == 5) {
