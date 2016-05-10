@@ -54,7 +54,7 @@ public class WorkerNode {
 
 		addConnexion();
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(4000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
