@@ -38,7 +38,7 @@ public class WorkerNode {
 
 		config = new XmlRpcClientConfigImpl();
 		try {
-			config.setServerURL(new URL("http://127.0.0.1:8080/xmlrpc"));
+			config.setServerURL(new URL("http://192.168.0.237:8080/xmlrpc"));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

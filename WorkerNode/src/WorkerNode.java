@@ -21,7 +21,7 @@ public class WorkerNode {
 
 	public static void main(String[] args) throws Exception {
 
-		System.out.println("Worker staring...");
+		System.out.println("Worker starting...");
 
 		WebServer webServer = new WebServer(port);
 
