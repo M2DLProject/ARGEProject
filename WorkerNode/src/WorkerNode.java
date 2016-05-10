@@ -54,12 +54,11 @@ public class WorkerNode {
 
 		addConnexion();
 		try {
-			Thread.sleep(4000);
+			Thread.sleep(10000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
 		removeConnexion();
-		System.out.println("addition ok");
 		return i1 + i2 + 10;
 	}
 }
