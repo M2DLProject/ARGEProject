@@ -59,6 +59,7 @@ public class WorkerNode {
 			Thread.currentThread().interrupt();
 		}
 		removeConnexion();
+		System.out.println("addition ok");
 		return i1 + i2 + 10;
 	}
 }

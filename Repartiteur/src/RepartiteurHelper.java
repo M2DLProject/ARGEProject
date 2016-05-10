@@ -61,9 +61,7 @@ public class RepartiteurHelper {
 			while ((sCurrentLine = br.readLine()) != null) {
 				String[] s = sCurrentLine.split(" ");
 				System.out.println("IP : " + s[0] + " PORT : " + s[1]);
-				WorkerNode w = new WorkerNode();
-				w.setIp(s[0]);
-				w.setPort(s[1]);
+				WorkerNode w = new WorkerNode(s[0],s[1]);
 				workerNodes.add(w);
 			}
 
@@ -102,9 +100,7 @@ public class RepartiteurHelper {
 	}
 
 	public synchronized void addWN(String ip, String port) {
-		WorkerNode w = new WorkerNode();
-		w.setIp(ip);
-		w.setPort(port);
+		WorkerNode w = new WorkerNode(ip, port);
 		workerNodes.add(w);
 		updateWNBase();
 		System.out.println("Add Node : " + ip + ":" + port);

@@ -34,11 +34,13 @@ public class WorkerNode {
 
 	private Integer charge = 0;
 
-	public WorkerNode() {
+	public WorkerNode(String ip, String port) {
 
+		this.setIp(ip);
+		this.setPort(port);
 		config = new XmlRpcClientConfigImpl();
 		try {
-			config.setServerURL(new URL("http://192.168.0.237:8080/xmlrpc"));
+			config.setServerURL(new URL("http://"+ip+":"+port+"/xmlrpc"));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
