@@ -21,9 +21,17 @@ public class WorkerNode {
 		connexionCount--;
 	}
 
+	public static int random = 1000;
+
 	public static void main(String[] args) throws Exception {
 
 		System.out.println("Worker starting...");
+
+		Random rand = new Random(); // constructeur
+		random = rand.nextInt(10);
+		if (random == 0) {
+			random = 1;
+		}
 
 		WebServer webServer = new WebServer(port);
 
@@ -54,17 +62,14 @@ public class WorkerNode {
 
 	public int add(int i1, int i2) {
 
-		Random rand = new Random(); // constructeur
-		int i = rand.nextInt(10);
-
 		addConnexion();
 		try {
 
-			Thread.sleep(i * 1000);
+			Thread.sleep(random * 1000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
 		removeConnexion();
-		return i1 + i2 + 10 + i * 1000;
+		return i1 + i2 + 10 + random * 1000;
 	}
 }
