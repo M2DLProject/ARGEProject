@@ -52,18 +52,19 @@ public class WorkerNode {
 
 	public int add(int i1, int i2) {
 
+		int lower = 1;
+		int higher = 10;
+
+		int random = (int) (Math.random() * (higher - lower)) + lower;
+
 		addConnexion();
 		try {
 
-			int lower = 1;
-			int higher = 10;
-
-			int random = (int) (Math.random() * (higher - lower)) + lower;
 			Thread.sleep(random * 1000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
 		removeConnexion();
-		return i1 + i2 + 10;
+		return i1 + i2 + 10 + random * 1000;
 	}
 }
