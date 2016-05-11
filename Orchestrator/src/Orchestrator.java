@@ -218,8 +218,6 @@ public class Orchestrator {
 		config.setServerURL(new URL("http://" + ip + ":" + port + "/xmlrpc"));
 		config.setEnabledForExtensions(true);
 		config.setConnectionTimeout(1000);
-		config.setReplyTimeout(1000);
-		config.setEnabledForExceptions(false);
 
 		XmlRpcClient client = new XmlRpcClient();
 
@@ -230,7 +228,7 @@ public class Orchestrator {
 
 		Integer result = 0;
 		Object[] params = new Object[] {};
-		System.out.println("get status...");
+		System.out.print("...");
 		try {
 			result = (Integer) client.execute("Calculator.status", params);
 		} catch (Exception e) {
