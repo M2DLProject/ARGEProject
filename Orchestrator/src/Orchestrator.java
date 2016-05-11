@@ -280,11 +280,9 @@ public class Orchestrator {
 		System.out.print("Boot Worker Node...");
 		try {
 			while (!checkWNisReady(ip, port)) {
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// e.printStackTrace();
-				}
+
+				Thread.sleep(2000);
+
 			}
 		} catch (Exception e) {
 			// e.printStackTrace();

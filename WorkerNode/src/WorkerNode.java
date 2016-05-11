@@ -54,7 +54,12 @@ public class WorkerNode {
 
 		addConnexion();
 		try {
-			Thread.sleep(4000);
+
+			int lower = 1000;
+			int higher = 5000;
+
+			int random = (int) (Math.random() * (higher - lower)) + lower;
+			Thread.sleep(random);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
