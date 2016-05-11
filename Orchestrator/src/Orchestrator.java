@@ -217,7 +217,7 @@ public class Orchestrator {
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		config.setServerURL(new URL("http://" + ip + ":" + port + "/xmlrpc"));
 		config.setEnabledForExtensions(true);
-		config.setConnectionTimeout(1000);
+		// config.setConnectionTimeout(1000);
 
 		XmlRpcClient client = new XmlRpcClient();
 
@@ -230,6 +230,7 @@ public class Orchestrator {
 		System.out.print("...");
 		try {
 			result = (Integer) client.execute("Calculator.status", params);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
