@@ -217,7 +217,7 @@ public class Orchestrator {
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		config.setServerURL(new URL("http://" + ip + ":" + port + "/xmlrpc"));
 		config.setEnabledForExtensions(true);
-		// config.setConnectionTimeout(1000);
+		config.setConnectionTimeout(1000);
 
 		XmlRpcClient client = new XmlRpcClient();
 
@@ -278,12 +278,16 @@ public class Orchestrator {
 		result.put("ip", ip);
 
 		System.out.print("Boot Worker Node...");
-		while (!checkWNisReady(ip, port)) {
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// e.printStackTrace();
+		try {
+			while (!checkWNisReady(ip, port)) {
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// e.printStackTrace();
+				}
 			}
+		} catch (Exception e) {
+			// e.printStackTrace();
 		}
 		System.out.println("OK");
 
