@@ -223,7 +223,6 @@ public class Orchestrator {
 
 		// use Commons HttpClient as transport
 		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
-		// set configuration
 		client.setConfig(config);
 
 		Integer result = 0;
@@ -282,7 +281,7 @@ public class Orchestrator {
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				// e.printStackTrace();
 			}
 		}
 		System.out.println("OK");
