@@ -1,5 +1,7 @@
 
 //  import org.apache.xmlrpc.demo.webserver.proxy.impls.AdderImpl;
+import java.util.Random;
+
 import org.apache.xmlrpc.server.PropertyHandlerMapping;
 import org.apache.xmlrpc.server.XmlRpcServer;
 import org.apache.xmlrpc.server.XmlRpcServerConfigImpl;
@@ -52,19 +54,17 @@ public class WorkerNode {
 
 	public int add(int i1, int i2) {
 
-		int lower = 1;
-		int higher = 10;
-
-		int random = (int) (Math.random() * (higher - lower)) + lower;
+		Random rand = new Random(); // constructeur
+		int i = rand.nextInt(10);
 
 		addConnexion();
 		try {
 
-			Thread.sleep(random * 1000);
+			Thread.sleep(i * 1000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
 		removeConnexion();
-		return i1 + i2 + 10 + random * 1000;
+		return i1 + i2 + 10 + i * 1000;
 	}
 }
