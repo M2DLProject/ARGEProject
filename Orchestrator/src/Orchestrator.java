@@ -96,7 +96,7 @@ public class Orchestrator {
 				total = total + count;
 			}
 			if (total/workerNodes.size() > nbConnexionMax ){
-				String repartiteurIP = "192.168.0.236";
+				String repartiteurIP = "192.168.0.180";
 				String repartiteurP = "8081";
 				System.out.println("Mise à jour Ajout d'une machine");
 				Map<String, String> params = createVM();
@@ -124,7 +124,7 @@ public class Orchestrator {
 
 		if (n == 1) {
 
-			String repartiteurIP = "192.168.0.236";
+			String repartiteurIP = "192.168.0.180";
 			String repartiteurP = "8081";
 			System.out.println("Repartiteur IP : " + repartiteurIP);
 			System.out.println("Repartiteur PORT : " + repartiteurP);
@@ -138,7 +138,7 @@ public class Orchestrator {
 		}
 
 		if (n == 2) {
-			String repartiteurIP = "192.168.0.236";
+			String repartiteurIP = "192.168.0.180";
 			String repartiteurP = "8081";
 			System.out.println("Repartiteur IP : " + repartiteurIP);
 			System.out.println("Repartiteur PORT : " + repartiteurP);
@@ -157,7 +157,7 @@ public class Orchestrator {
 		}
 
 		if (n == 4) {
-			update_repartiteur.restartRepartiteur("192.168.0.236", "8081");
+			update_repartiteur.restartRepartiteur("192.168.0.180", "8081");
 		}
 
 		if (n == 5) {
@@ -270,7 +270,7 @@ public class Orchestrator {
 		// Create VM
 		System.out.print("Create VM...");
 		List<String> network = new ArrayList<>();
-		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
+		network.add("6cfb3c4c-54f6-44c5-8c69-14c63799b376");
 
 		// ServerCreate serverCreate = Builders.server().name("doom_WN_" + new
 		// Date().getTime()).flavor("2")
