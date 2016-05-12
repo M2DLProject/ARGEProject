@@ -29,13 +29,13 @@ public class client {
 
 		System.out.println("=======================");
 		System.out.println("Client call " + calls + " : " + ip + " " + port);
-		while(true){
+		//while(true){
 			for (int i = 0; i < calls; i++) {
 				ClientLaucher clientLaucher = new ClientLaucher();
 				clientLaucher.client = client;
 				clientLaucher.start();
 			}
-			Thread.sleep(1000);
-		}
+			//Thread.sleep(1000);
+		//}
 	}
 }
