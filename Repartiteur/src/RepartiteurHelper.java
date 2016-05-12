@@ -33,13 +33,13 @@ public class RepartiteurHelper {
 
 	public synchronized WorkerNode getWN() {
 
-		Integer connection = 11;
+		//Integer connection = 11;
 		WorkerNode freeWN = null;
-		while(connection >= 10){
+		//while(connection >= 10){
 			count++;
 			freeWN = getFreeWN();
-			connection = getConnexionCount(freeWN.getIp(), freeWN.getPort());
-		}
+			//connection = getConnexionCount(freeWN.getIp(), freeWN.getPort());
+		//}
 
 		return freeWN;
 	}
