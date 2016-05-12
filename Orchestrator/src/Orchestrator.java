@@ -41,6 +41,9 @@ public class Orchestrator {
 		if (n == 1) {
 			manuel();
 		}
+		if(n == 2){
+			auto();
+		}
 
 	}
 
