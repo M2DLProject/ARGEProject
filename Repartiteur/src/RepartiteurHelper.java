@@ -5,8 +5,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.client.XmlRpcClient;
+import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 
 public class RepartiteurHelper {
 
@@ -27,9 +33,13 @@ public class RepartiteurHelper {
 
 	public synchronized WorkerNode getWN() {
 
-		count++;
-
-		WorkerNode freeWN = getFreeWN();
+		Integer connection = 0;
+		WorkerNode freeWN = null;
+		while(connection >= 10){
+			count++;
+			freeWN = getFreeWN();
+			connection = getConnexionCount(freeWN.getIp(), freeWN.getPort());
+		}
 
 		return freeWN;
 	}
@@ -132,4 +142,34 @@ public class RepartiteurHelper {
 		System.out.println("OK ");
 	}
 
+	public static Integer getConnexionCount(String ipR, String portR) {
+
+		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+
+		try {
+			config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		config.setEnabledForExtensions(true);
+		config.setConnectionTimeout(60 * 1000);
+		config.setReplyTimeout(60 * 1000);
+
+		XmlRpcClient client = new XmlRpcClient();
+
+		// use Commons HttpClient as transport
+		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
+		// set configuration
+		client.setConfig(config);
+
+		Object[] params = new Object[] {};
+		Integer result = null;
+		try {
+			result = (Integer) client.execute("Calculator.getConnexionCount", params);
+		} catch (XmlRpcException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
