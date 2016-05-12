@@ -76,6 +76,7 @@ public class Orchestrator {
 	public static void auto() throws Exception {
 
 		System.out.println("#AUTO");
+		getAllWN();
 
 		while (true) {
 
@@ -195,6 +196,25 @@ public class Orchestrator {
 		}
 
 		workerNodes.remove(ip);
+
+	}
+	
+	public static void getAllWN() {
+
+		List<? extends Server> servers = os.compute().servers().list();
+
+		int it = 0;
+		while (it < servers.size()) {
+
+			Server server = os.compute().servers().get(servers.get(it).getId());
+
+			if (server.getName().contains("doom_WN_")) {
+				String ip = getServerIP(server, TypeIP.Private);
+				workerNodes.add(ip);
+			}
+
+			it++;
+		}
 
 	}
 
