@@ -33,7 +33,7 @@ public class RepartiteurHelper {
 
 	public synchronized WorkerNode getWN() {
 
-		Integer connection = 0;
+		Integer connection = 11;
 		WorkerNode freeWN = null;
 		while(connection >= 10){
 			count++;
