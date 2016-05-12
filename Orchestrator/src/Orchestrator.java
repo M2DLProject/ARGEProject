@@ -270,14 +270,14 @@ public class Orchestrator {
 		// Create VM
 		System.out.print("Create VM...");
 		List<String> network = new ArrayList<>();
-		network.add("6cfb3c4c-54f6-44c5-8c69-14c63799b376");
+		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
 
 		// ServerCreate serverCreate = Builders.server().name("doom_WN_" + new
 		// Date().getTime()).flavor("2")
 		// .image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
 
 		ServerCreate serverCreate = Builders.server().name("doom_WN_" + new Date().getTime()).flavor("2")
-				.image("efbd6e8d-9121-4b68-9fce-929a8f2cf061").networks(network).build();
+				.image("6cfb3c4c-54f6-44c5-8c69-14c63799b376").networks(network).build();
 
 		System.out.println("OK");
 
