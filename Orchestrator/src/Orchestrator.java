@@ -41,7 +41,7 @@ public class Orchestrator {
 		if (n == 1) {
 			manuel();
 		}
-		if(n == 2){
+		if (n == 2) {
 			auto();
 		}
 
@@ -51,7 +51,7 @@ public class Orchestrator {
 
 	}
 
-	public static Integer getConnexionCount(String ipR, String portR) throws Exception {
+	public static Double getSystemStatistics(String ipR, String portR) throws Exception {
 
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 
@@ -68,9 +68,9 @@ public class Orchestrator {
 		client.setConfig(config);
 
 		Object[] params = new Object[] {};
-		Integer result = null;
+		Double result = null;
 		try {
-			result = (Integer) client.execute("Calculator.getConnexionCount", params);
+			result = (Double) client.execute("Calculator.getSystemStatistics", params);
 		} catch (XmlRpcException e) {
 			e.printStackTrace();
 		}
@@ -90,26 +90,25 @@ public class Orchestrator {
 				Thread.currentThread().interrupt();
 			}
 
-			int total = 0;
+			Double total = 0D;
 			int nbConnexionMax = 5;
 			System.out.println("Scan...");
 			for (String ip : workerNodes) {
 
-				Integer count = getConnexionCount(ip, "8080");
+				Double count = getSystemStatistics(ip, "8080");
 				System.out.println(ip + " : " + count);
 				total = total + count;
 			}
-			if (total/workerNodes.size() > nbConnexionMax ){
-				String repartiteurIP = "192.168.0.180";
-				String repartiteurP = "8081";
-				System.out.println("Mise à jour Ajout d'une machine");
-				Map<String, String> params = createVM();
-				System.out.println("VM IP: " + params.get("ip"));
-				System.out.println("VM PORT: " + params.get("port"));
-				update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
-			} else {
-				//Supprimé VM
-			}
+			/*
+			 * if (total / workerNodes.size() > nbConnexionMax) { String
+			 * repartiteurIP = "192.168.0.180"; String repartiteurP = "8081";
+			 * System.out.println("Mise à jour Ajout d'une machine");
+			 * Map<String, String> params = createVM(); System.out.println(
+			 * "VM IP: " + params.get("ip")); System.out.println("VM PORT: " +
+			 * params.get("port")); update_repartiteur.addWN(repartiteurIP,
+			 * repartiteurP, params.get("ip"), params.get("port")); } else { //
+			 * Supprimé VM }
+			 */
 
 		}
 
@@ -202,7 +201,7 @@ public class Orchestrator {
 		workerNodes.remove(ip);
 
 	}
-	
+
 	public static void getAllWN() {
 
 		List<? extends Server> servers = os.compute().servers().list();

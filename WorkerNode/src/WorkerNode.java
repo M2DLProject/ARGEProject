@@ -6,8 +6,13 @@ import org.apache.xmlrpc.server.PropertyHandlerMapping;
 import org.apache.xmlrpc.server.XmlRpcServer;
 import org.apache.xmlrpc.server.XmlRpcServerConfigImpl;
 import org.apache.xmlrpc.webserver.WebServer;
+import org.hyperic.sigar.CpuPerc;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
 
 public class WorkerNode {
+
+	private static Sigar sigar = new Sigar();
 
 	private static final int port = 8080;
 
@@ -58,6 +63,18 @@ public class WorkerNode {
 
 	public int getConnexionCount() {
 		return connexionCount;
+	}
+
+	public static Double getSystemStatistics() {
+
+		CpuPerc cpuperc = null;
+		try {
+			cpuperc = sigar.getCpuPerc();
+		} catch (SigarException se) {
+			se.printStackTrace();
+		}
+
+		return (cpuperc.getCombined() * 100);
 	}
 
 	public int add(int i1, int i2) {
