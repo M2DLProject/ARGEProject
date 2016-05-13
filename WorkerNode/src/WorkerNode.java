@@ -51,7 +51,7 @@ public class WorkerNode {
 		return 1;
 	}
 
-	public static double getSystemStatistics() {
+	public static double getSystemCPU() {
 
 		CpuPerc cpuperc = null;
 		try {

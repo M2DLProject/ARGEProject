@@ -66,7 +66,7 @@ public class Orchestrator {
 		Object[] params = new Object[] {};
 		double result = 0;
 		try {
-			result = (double) client.execute("Calculator.getSystemStatistics", params);
+			result = (double) client.execute("Calculator.getSystemCPU", params);
 		} catch (XmlRpcException e) {
 			e.printStackTrace();
 		}
