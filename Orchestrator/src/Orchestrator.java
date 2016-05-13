@@ -41,6 +41,9 @@ public class Orchestrator {
 		if (n == 1) {
 			manuel();
 		}
+		if(n == 2){
+			auto();
+		}
 
 		if (n == 2) {
 			auto();
@@ -77,18 +80,7 @@ public class Orchestrator {
 	public static void auto() throws Exception {
 
 		System.out.println("#AUTO");
-
-		String repartiteurIP = "192.168.0.114";
-		String repartiteurP = "8081";
-		System.out.println("Repartiteur IP : " + repartiteurIP);
-		System.out.println("Repartiteur PORT : " + repartiteurP);
-
-		Map<String, String> params = createVM();
-
-		System.out.println("VM IP: " + params.get("ip"));
-		System.out.println("VM PORT: " + params.get("port"));
-
-		update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
+		getAllWN();
 
 		while (true) {
 
@@ -98,11 +90,25 @@ public class Orchestrator {
 				Thread.currentThread().interrupt();
 			}
 
+			int total = 0;
+			int nbConnexionMax = 5;
 			System.out.println("Scan...");
 			for (String ip : workerNodes) {
 
 				Integer count = getConnexionCount(ip, "8080");
 				System.out.println(ip + " : " + count);
+				total = total + count;
+			}
+			if (total/workerNodes.size() > nbConnexionMax ){
+				String repartiteurIP = "192.168.0.180";
+				String repartiteurP = "8081";
+				System.out.println("Mise à jour Ajout d'une machine");
+				Map<String, String> params = createVM();
+				System.out.println("VM IP: " + params.get("ip"));
+				System.out.println("VM PORT: " + params.get("port"));
+				update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
+			} else {
+				//Supprimé VM
 			}
 
 		}
@@ -122,7 +128,7 @@ public class Orchestrator {
 
 		if (n == 1) {
 
-			String repartiteurIP = "192.168.0.236";
+			String repartiteurIP = "192.168.0.180";
 			String repartiteurP = "8081";
 			System.out.println("Repartiteur IP : " + repartiteurIP);
 			System.out.println("Repartiteur PORT : " + repartiteurP);
@@ -136,7 +142,7 @@ public class Orchestrator {
 		}
 
 		if (n == 2) {
-			String repartiteurIP = "192.168.0.236";
+			String repartiteurIP = "192.168.0.180";
 			String repartiteurP = "8081";
 			System.out.println("Repartiteur IP : " + repartiteurIP);
 			System.out.println("Repartiteur PORT : " + repartiteurP);
@@ -155,7 +161,7 @@ public class Orchestrator {
 		}
 
 		if (n == 4) {
-			update_repartiteur.restartRepartiteur("192.168.0.236", "8081");
+			update_repartiteur.restartRepartiteur("192.168.0.180", "8081");
 		}
 
 		if (n == 5) {
@@ -194,6 +200,25 @@ public class Orchestrator {
 		}
 
 		workerNodes.remove(ip);
+
+	}
+	
+	public static void getAllWN() {
+
+		List<? extends Server> servers = os.compute().servers().list();
+
+		int it = 0;
+		while (it < servers.size()) {
+
+			Server server = os.compute().servers().get(servers.get(it).getId());
+
+			if (server.getName().contains("doom_WN_")) {
+				String ip = getServerIP(server, TypeIP.Private);
+				workerNodes.add(ip);
+			}
+
+			it++;
+		}
 
 	}
 
@@ -256,7 +281,7 @@ public class Orchestrator {
 		// .image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
 
 		ServerCreate serverCreate = Builders.server().name("doom_WN_" + new Date().getTime()).flavor("2")
-				.image("efbd6e8d-9121-4b68-9fce-929a8f2cf061").networks(network).build();
+				.image("6cfb3c4c-54f6-44c5-8c69-14c63799b376").networks(network).build();
 
 		System.out.println("OK");
 
