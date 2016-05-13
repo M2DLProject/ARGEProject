@@ -16,16 +16,6 @@ public class WorkerNode {
 
 	private static final int port = 8080;
 
-	public static Integer connexionCount = 0;
-
-	public static synchronized void addConnexion() {
-		connexionCount++;
-	}
-
-	public static synchronized void removeConnexion() {
-		connexionCount--;
-	}
-
 	public static int random = 1000;
 
 	public static void main(String[] args) throws Exception {
@@ -61,10 +51,6 @@ public class WorkerNode {
 		return 1;
 	}
 
-	public int getConnexionCount() {
-		return connexionCount;
-	}
-
 	public static double getSystemStatistics() {
 
 		CpuPerc cpuperc = null;
@@ -79,14 +65,13 @@ public class WorkerNode {
 
 	public int add(int i1, int i2) {
 
-		addConnexion();
 		try {
 
 			Thread.sleep(random * 1000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
-		removeConnexion();
+
 		return i1 + i2 + 10 + random * 1000;
 	}
 }

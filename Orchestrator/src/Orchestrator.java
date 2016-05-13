@@ -47,7 +47,7 @@ public class Orchestrator {
 
 	}
 
-	public static double getSystemStatistics(String ipR, String portR) throws Exception {
+	public static double getSystemCPU(String ipR, String portR) throws Exception {
 
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 
@@ -91,7 +91,7 @@ public class Orchestrator {
 			System.out.println("Scan...");
 			for (String ip : workerNodes) {
 
-				Double count = getSystemStatistics(ip, "8080");
+				Double count = getSystemCPU(ip, "8080");
 				System.out.println(ip + " : " + count);
 				total = total + count;
 			}
@@ -276,7 +276,7 @@ public class Orchestrator {
 		// .image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
 
 		ServerCreate serverCreate = Builders.server().name("doom_WN_" + new Date().getTime()).flavor("2")
-				.image("af82084f-025b-4cc4-87b9-8c7a64d501f0").networks(network).build();
+				.image("8762f613-a8f2-47f6-aff4-32d78dd49dea").networks(network).build();
 
 		System.out.println("OK");
 
