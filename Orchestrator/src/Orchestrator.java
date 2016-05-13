@@ -117,6 +117,7 @@ public class Orchestrator {
 		System.out.println("3) servers list");
 		System.out.println("4) Restart Repartiteur (XMLRPC)");
 		System.out.println("5) Delete all workernodes");
+		System.out.println("6) Get status");
 		System.out.print("What ? ");
 		Scanner scanner = new Scanner(System.in);
 		int n = scanner.nextInt();
@@ -161,6 +162,12 @@ public class Orchestrator {
 
 		if (n == 5) {
 			deleteAllWN();
+		}
+
+		if (n == 6) {
+			System.out.print("IP to delete? ");
+			String ip = scanner.next();
+			checkWNisReady(ip, "8080");
 		}
 
 		manuel();
