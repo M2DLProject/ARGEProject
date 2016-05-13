@@ -65,7 +65,7 @@ public class WorkerNode {
 		return connexionCount;
 	}
 
-	public static Double getSystemStatistics() {
+	public static double getSystemStatistics() {
 
 		CpuPerc cpuperc = null;
 		try {

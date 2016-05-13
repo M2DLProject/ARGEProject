@@ -45,13 +45,9 @@ public class Orchestrator {
 			auto();
 		}
 
-		if (n == 2) {
-			auto();
-		}
-
 	}
 
-	public static Double getSystemStatistics(String ipR, String portR) throws Exception {
+	public static double getSystemStatistics(String ipR, String portR) throws Exception {
 
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 
@@ -68,9 +64,9 @@ public class Orchestrator {
 		client.setConfig(config);
 
 		Object[] params = new Object[] {};
-		Double result = null;
+		double result = 0;
 		try {
-			result = (Double) client.execute("Calculator.getSystemStatistics", params);
+			result = (double) client.execute("Calculator.getSystemStatistics", params);
 		} catch (XmlRpcException e) {
 			e.printStackTrace();
 		}
