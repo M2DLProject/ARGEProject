@@ -276,7 +276,7 @@ public class Orchestrator {
 		// .image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
 
 		ServerCreate serverCreate = Builders.server().name("doom_WN_" + new Date().getTime()).flavor("2")
-				.image("6cfb3c4c-54f6-44c5-8c69-14c63799b376").networks(network).build();
+				.image("af82084f-025b-4cc4-87b9-8c7a64d501f0").networks(network).build();
 
 		System.out.println("OK");
 
