@@ -42,6 +42,10 @@ public class Orchestrator {
 			manuel();
 		}
 
+		if (n == 2) {
+			auto();
+		}
+
 	}
 
 	public static Integer getConnexionCount(String ipR, String portR) throws Exception {
