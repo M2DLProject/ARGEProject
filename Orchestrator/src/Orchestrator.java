@@ -167,7 +167,7 @@ public class Orchestrator {
 		if (n == 6) {
 			System.out.print("IP to delete? ");
 			String ip = scanner.next();
-			checkWNisReady(ip, "8080");
+			System.out.println(checkWNisReady(ip, "8080"));
 		}
 
 		manuel();
