@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.xmlrpc.XmlRpcException;
-import org.apache.xmlrpc.client.AsyncCallback;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
@@ -45,12 +44,12 @@ public class RepartiteurHelper {
 		return freeWN;
 	}
 
-	public void callMethod(String method, Object[] params, AsyncCallback async) {
+	public Integer callMethod(String method, Object[] params) {
 
 		WorkerNode lastVM = getWN();
 		// wait until worker is ready
 		// System.out.println("vm " + workerNodes.indexOf(lastVM));
-		lastVM.callMethod(method, params, async);
+		return lastVM.callMethod(method, params);
 		// lastVM.removeCharge();
 	}
 

@@ -2,14 +2,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.xmlrpc.XmlRpcException;
-import org.apache.xmlrpc.client.AsyncCallback;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 
 public class WorkerNode {
 
-	private static XmlRpcClient client;
+	private XmlRpcClient client;
 
 	private String ip = "0";
 
@@ -61,16 +60,16 @@ public class WorkerNode {
 
 	}
 
-	public static void callMethod(String method, Object[] params, AsyncCallback async) {
+	public Integer callMethod(String method, Object[] params) {
 
 		Integer result = 0;
-
 		try {
-			client.executeAsync("Calculator." + method, params, async);
+			result = (Integer) client.execute("Calculator." + method, params);
 		} catch (XmlRpcException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 
 	}
 
