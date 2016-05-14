@@ -115,7 +115,7 @@ public class Orchestrator {
 					if(workerNodes.size() > 1 && total/workerNodes.size() < 30){
 						//Suppression de la machine ipLessCharged
 						update_repartiteur.delWN(repartiteurIP, repartiteurP, ipLessCharged, "8080");
-						//temporaire il faudrait faire ça dans un thread a part qui wait le temps total d'un calcul WN 
+						//temporaire il faudrait faire ca dans un thread a part qui wait le temps total d un calcul WN 
 						//(depend du random pour le moment entre 1 et 10?)
 						//pour ne pas perdre les derniers appels clients
 						deleteVM(ipLessCharged);
