@@ -2,6 +2,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.client.AsyncCallback;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
@@ -40,7 +41,7 @@ public class WorkerNode {
 		this.setPort(port);
 		config = new XmlRpcClientConfigImpl();
 		try {
-			config.setServerURL(new URL("http://"+ip+":"+port+"/xmlrpc"));
+			config.setServerURL(new URL("http://" + ip + ":" + port + "/xmlrpc"));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,18 +61,16 @@ public class WorkerNode {
 
 	}
 
-	public Integer callMethod(String method, Object[] params) {
+	public void callMethod(String method, Object[] params, AsyncCallback async) {
 
 		Integer result = 0;
 
 		try {
-			result = (Integer) client.execute("Calculator." + method, params);
+			client.executeAsync("Calculator." + method, params, async);
 		} catch (XmlRpcException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return result + 100;
 
 	}
 

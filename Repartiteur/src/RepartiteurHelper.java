@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.client.AsyncCallback;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
@@ -33,26 +34,24 @@ public class RepartiteurHelper {
 
 	public synchronized WorkerNode getWN() {
 
-		//Integer connection = 11;
+		// Integer connection = 11;
 		WorkerNode freeWN = null;
-		//while(connection >= 10){
-			count++;
-			freeWN = getFreeWN();
-			//connection = getConnexionCount(freeWN.getIp(), freeWN.getPort());
-		//}
+		// while(connection >= 10){
+		count++;
+		freeWN = getFreeWN();
+		// connection = getConnexionCount(freeWN.getIp(), freeWN.getPort());
+		// }
 
 		return freeWN;
 	}
 
-	public Integer callMethod(String method, Object[] params) {
+	public void callMethod(String method, Object[] params, AsyncCallback async) {
 
 		WorkerNode lastVM = getWN();
 		// wait until worker is ready
 		// System.out.println("vm " + workerNodes.indexOf(lastVM));
-		Integer res = lastVM.callMethod(method, params);
+		lastVM.callMethod(method, params, async);
 		// lastVM.removeCharge();
-		return res;
-
 	}
 
 	public synchronized void loadWNBase() {
@@ -71,7 +70,7 @@ public class RepartiteurHelper {
 			while ((sCurrentLine = br.readLine()) != null) {
 				String[] s = sCurrentLine.split(" ");
 				System.out.println("IP : " + s[0] + " PORT : " + s[1]);
-				WorkerNode w = new WorkerNode(s[0],s[1]);
+				WorkerNode w = new WorkerNode(s[0], s[1]);
 				workerNodes.add(w);
 			}
 
