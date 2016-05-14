@@ -108,7 +108,7 @@ public class RepartiteurHelper {
 	public synchronized void updateWNBase() {
 
 		try {
-
+			System.out.println("Entree dans la fonction delete");
 			File file = new File("dbWN.data");
 
 			if (!file.exists()) {
@@ -122,6 +122,7 @@ public class RepartiteurHelper {
 
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
+			System.out.println("Contenu du bw : " + bw);
 			bw.write(content);
 			bw.close();
 
@@ -142,6 +143,8 @@ public class RepartiteurHelper {
 
 	public synchronized void delWN(String ip, String port) {
 		Integer idToDelete = null;
+		System.out.println("boucle de vérif de delWN");
+		
 		for (int i = 0; i < workerNodes.size(); i++) {
 			WorkerNode worker = workerNodes.get(i);
 			if (worker.getIp().equals(ip) && worker.getPort().equals(port)) {
@@ -149,6 +152,7 @@ public class RepartiteurHelper {
 
 			}
 		}
+		System.out.println("le worker node a delete est : " + idToDelete);
 		if (idToDelete != null) {
 			workerNodes.remove(idToDelete);
 			updateWNBase();
