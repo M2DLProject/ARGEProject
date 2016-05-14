@@ -71,7 +71,7 @@ public class RepartiteurHelper {
 		WorkerNode lastVM = getWN();
 		// wait until worker is ready
 		// System.out.println("vm " + workerNodes.indexOf(lastVM));
-		System.out.println("Repartiteur is call!");
+		//System.out.println("Repartiteur is call!");
 		Integer result = lastVM.callMethod(method, params);
 
 		return result;
