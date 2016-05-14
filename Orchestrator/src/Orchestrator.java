@@ -98,7 +98,7 @@ public class Orchestrator {
 			/*
 			 * if (total / workerNodes.size() > nbConnexionMax) { String
 			 * repartiteurIP = "192.168.0.180"; String repartiteurP = "8081";
-			 * System.out.println("Mise à jour Ajout d'une machine");
+			 * System.out.println("Mise a jour Ajout d'une machine");
 			 * Map<String, String> params = createVM(); System.out.println(
 			 * "VM IP: " + params.get("ip")); System.out.println("VM PORT: " +
 			 * params.get("port")); update_repartiteur.addWN(repartiteurIP,
