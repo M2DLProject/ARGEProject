@@ -85,26 +85,41 @@ public class Orchestrator {
 			} catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
 			}
-
+			String repartiteurIP = "192.168.0.180";
+			String repartiteurP = "8081";
 			Double total = 0D;
+			String ipLessCharged = null;
+			Double chargeMin = 100D;
 			//int nbConnexionMax = 5;
 			System.out.println("Scan...");
 			for (String ip : workerNodes) {
-
 				Double count = getSystemCPU(ip, "8080");
 				System.out.println(ip + " : " + count);
 				total = total + count;
+				//On recupere l ip de la machine la moins chargee
+				if(chargeMin > count){
+					ipLessCharged = ip;
+					chargeMin = count;
+				}
 			}
-			
+			//Test besoin d'une machine ou trop de machine
 			if(total/workerNodes.size() > 75){
-				String repartiteurIP = "192.168.0.180";
-				String repartiteurP = "8081";
+				
 				Map<String, String> params = createVM();
 				System.out.println("VM IP: " + params.get("ip"));
 				System.out.println("VM PORT: " + params.get("port"));
 				update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
+				
 				} else { 
-					//Supprime VM }
+					
+					if(workerNodes.size() > 1 && total/workerNodes.size() < 30){
+						//Suppression de la machine ipLessCharged
+						update_repartiteur.delWN(repartiteurIP, repartiteurP, ipLessCharged, "8080");
+						//temporaire il faudrait faire ça dans un thread a part qui wait le temps total d'un calcul WN 
+						//(depend du random pour le moment entre 1 et 10?)
+						//pour ne pas perdre les derniers appels clients
+						deleteVM(ipLessCharged);
+					}
 			}
 			/*
 			 * if (total / workerNodes.size() > nbConnexionMax) { String
