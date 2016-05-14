@@ -96,7 +96,7 @@ public class Orchestrator {
 				total = total + count;
 			}
 			
-			if(total/10 > 75){
+			if(total/workerNodes.size() > 75){
 				String repartiteurIP = "192.168.0.180";
 				String repartiteurP = "8081";
 				Map<String, String> params = createVM();
