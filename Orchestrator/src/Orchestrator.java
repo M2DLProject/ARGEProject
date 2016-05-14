@@ -119,6 +119,7 @@ public class Orchestrator {
 					// wait le temps total d un calcul WN
 					// (depend du random pour le moment entre 1 et 10?)
 					// pour ne pas perdre les derniers appels clients
+					Thread.sleep(3000);
 					deleteVM(ipLessCharged);
 				}
 			}
