@@ -60,7 +60,7 @@ public class RepartiteurHelper {
 	public synchronized WorkerNode getWN() {
 
 		// Integer connection = 11;
-		WorkerNode freeWN = null;
+		WorkerNode freeWN = getFreeWN();
 		// while(connection >= 10){
 
 		return freeWN;
