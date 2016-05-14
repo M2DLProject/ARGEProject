@@ -75,6 +75,7 @@ public class RepartiteurHelper {
 			// }
 			if (cpu > 80) {
 				freeWN = null;
+				System.out.println("ok");
 			}
 
 		}
