@@ -143,20 +143,21 @@ public class RepartiteurHelper {
 
 	public synchronized void delWN(String ip, String port) {
 		Integer idToDelete = null;
-		WorkerNode worker = null;
+		WorkerNode workerToDelete = null;
 		System.out.println("boucle de verif de delWN");
 		
 		for (int i = 0; i < workerNodes.size(); i++) {
+			WorkerNode worker = workerNodes.get(i);
 			if (worker.getIp().equals(ip) && worker.getPort().equals(port)) {
 				idToDelete = i;
-				worker = workerNodes.get(i);
+				workerToDelete = worker;
 
 			}
 		}
 		System.out.println("le worker node a delete est : " + idToDelete);
 		if (idToDelete != null) {
 			System.out.println("La taille de la liste avant remove est : " + workerNodes.size());
-			workerNodes.remove(worker);
+			workerNodes.remove(workerToDelete);
 			System.out.println("La taille de la liste apres remove est : " + workerNodes.size());
 			updateWNBase();
 		}
