@@ -59,7 +59,11 @@ public class client {
 				u++;
 				System.out.println(u);
 			}
-			Thread.sleep(1000);
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e) {
+
+			}
 		}
 	}
 
