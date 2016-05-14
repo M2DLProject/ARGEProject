@@ -53,7 +53,7 @@ public class WorkerNode {
 		return (cpuperc.getCombined() * 100);
 	}
 
-	public int add(int i1, int i2, String ipBack) {
+	public int add(int i1, int i2) {
 
 		try {
 
