@@ -11,7 +11,22 @@ import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 public class client {
 
 	public static XmlRpcClient client;
-	public static AsyncCallback async;
+	public static AsyncCallback async = new AsyncCallback() {
+
+		public void handleResult(XmlRpcRequest arg0, Object arg1) {
+			// TODO Auto-generated method stub
+			System.out.println("2 +3 = " + arg1);
+			return;
+		}
+
+		@Override
+		public void handleError(XmlRpcRequest arg0, Throwable arg1) {
+			// TODO Auto-generated method stub
+			System.out.println("Erreur lors de l'appel xmlrpc async du client");
+
+		}
+
+	};
 
 	public static void main(String[] args) throws Exception {
 
@@ -33,22 +48,6 @@ public class client {
 		// set configuration
 		client.setConfig(config);
 
-		async = new AsyncCallback() {
-
-			public void handleResult(XmlRpcRequest arg0, Object arg1) {
-				// TODO Auto-generated method stub
-				System.out.println("2 +3 = " + arg1);
-				return;
-			}
-
-			@Override
-			public void handleError(XmlRpcRequest arg0, Throwable arg1) {
-				// TODO Auto-generated method stub
-				System.out.println("Erreur lors de l'appel xmlrpc async du client");
-
-			}
-		};
-
 		System.out.println("=======================");
 		System.out.println("Client call " + calls + " : " + ip + " " + port);
 		while (true) {
@@ -67,9 +66,7 @@ public class client {
 		try {
 			client.executeAsync("Repartiteur.call", params, async);
 
-		} catch (
-
-		XmlRpcException e) {
+		} catch (XmlRpcException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
