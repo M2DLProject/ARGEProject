@@ -52,9 +52,12 @@ public class client {
 
 		System.out.println("=======================");
 		System.out.println("Client call " + calls + " : " + ip + " " + port);
+		int u = 0;
 		while (true) {
 			for (int i = 0; i < calls; i++) {
 				call();
+				u++;
+				System.out.println(u);
 			}
 			Thread.sleep(1000);
 		}
