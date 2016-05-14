@@ -122,7 +122,7 @@ public class RepartiteurHelper {
 
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
-			System.out.println("Contenu du bw : " + bw.toString());
+			System.out.println("Contenu du bw : " + content);
 			bw.write(content);
 			bw.close();
 
