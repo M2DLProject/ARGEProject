@@ -64,7 +64,7 @@ public class WorkerNode {
 
 		Integer result = 0;
 		try {
-			client.execute("Calculator." + method, params);
+			result = (Integer) client.execute("Calculator." + method, params);
 		} catch (XmlRpcException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

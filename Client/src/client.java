@@ -83,7 +83,4 @@ public class client {
 		// System.out.println("2 + 3 = " + result);
 	}
 
-	public void recive(int i) {
-		System.out.println("result = " + i);
-	}
 }
