@@ -1,11 +1,17 @@
 
 import java.net.URL;
 
+import org.apache.xmlrpc.XmlRpcException;
+import org.apache.xmlrpc.XmlRpcRequest;
+import org.apache.xmlrpc.client.AsyncCallback;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 
 public class client {
+
+	public static XmlRpcClient client;
+	public static AsyncCallback async;
 
 	public static void main(String[] args) throws Exception {
 
@@ -20,22 +26,53 @@ public class client {
 		config.setConnectionTimeout(60 * 1000);
 		config.setReplyTimeout(60 * 1000);
 
-		XmlRpcClient client = new XmlRpcClient();
+		client = new XmlRpcClient();
 
 		// use Commons HttpClient as transport
 		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
 		// set configuration
 		client.setConfig(config);
 
+		async = new AsyncCallback() {
+
+			public void handleResult(XmlRpcRequest arg0, Object arg1) {
+				// TODO Auto-generated method stub
+				System.out.println("2 +3 = " + arg1);
+				return;
+			}
+
+			@Override
+			public void handleError(XmlRpcRequest arg0, Throwable arg1) {
+				// TODO Auto-generated method stub
+				System.out.println("Erreur lors de l'appel xmlrpc async du client");
+
+			}
+		};
+
 		System.out.println("=======================");
 		System.out.println("Client call " + calls + " : " + ip + " " + port);
-		while(true){
+		while (true) {
 			for (int i = 0; i < calls; i++) {
-				ClientLaucher clientLaucher = new ClientLaucher();
-				clientLaucher.client = client;
-				clientLaucher.start();
+				call();
 			}
 			Thread.sleep(1000);
 		}
+	}
+
+	public static void call() {
+
+		// make the a regular call
+		Object[] params = new Object[] { new String("add"), new Integer(2), new Integer(3) };
+		Integer result = null;
+		try {
+			client.executeAsync("Repartiteur.call", params, async);
+		} catch (
+
+		XmlRpcException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// System.out.println("2 + 3 = " + result);
 	}
 }
