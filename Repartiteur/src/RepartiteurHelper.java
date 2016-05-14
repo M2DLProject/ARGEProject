@@ -31,15 +31,53 @@ public class RepartiteurHelper {
 
 	}
 
+	public static double getSystemCPU(String ipR, String portR) throws Exception {
+
+		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+
+		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
+		config.setEnabledForExtensions(true);
+		config.setConnectionTimeout(60 * 1000);
+		config.setReplyTimeout(60 * 1000);
+
+		XmlRpcClient client = new XmlRpcClient();
+
+		// use Commons HttpClient as transport
+		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
+		// set configuration
+		client.setConfig(config);
+
+		Object[] params = new Object[] {};
+		double result = 0;
+		try {
+			result = (double) client.execute("Calculator.getSystemCPU", params);
+		} catch (XmlRpcException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	public synchronized WorkerNode getWN() {
 
 		// Integer connection = 11;
 		WorkerNode freeWN = null;
 		// while(connection >= 10){
-		count++;
-		freeWN = getFreeWN();
-		// connection = getConnexionCount(freeWN.getIp(), freeWN.getPort());
-		// }
+
+		while (freeWN == null) {
+			count++;
+
+			freeWN = getFreeWN();
+			Double cpu = null;
+			try {
+				cpu = getSystemCPU(freeWN.getIp(), freeWN.getPort());
+			} catch (Exception e) {
+			}
+			// }
+			if (cpu > 80) {
+				freeWN = null;
+			}
+
+		}
 
 		return freeWN;
 	}
@@ -49,7 +87,9 @@ public class RepartiteurHelper {
 		WorkerNode lastVM = getWN();
 		// wait until worker is ready
 		// System.out.println("vm " + workerNodes.indexOf(lastVM));
-		return lastVM.callMethod(method, params);
+		Integer result = lastVM.callMethod(method, params);
+
+		return result;
 		// lastVM.removeCharge();
 	}
 
