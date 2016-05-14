@@ -1,7 +1,5 @@
 
 //  import org.apache.xmlrpc.demo.webserver.proxy.impls.AdderImpl;
-import java.util.Random;
-
 import org.apache.xmlrpc.server.PropertyHandlerMapping;
 import org.apache.xmlrpc.server.XmlRpcServer;
 import org.apache.xmlrpc.server.XmlRpcServerConfigImpl;
@@ -16,17 +14,9 @@ public class WorkerNode {
 
 	private static final int port = 8080;
 
-	public static int random = 1000;
-
 	public static void main(String[] args) throws Exception {
 
 		System.out.println("Worker starting...");
-
-		Random rand = new Random(); // constructeur
-		random = rand.nextInt(10);
-		if (random == 0) {
-			random = 1;
-		}
 
 		WebServer webServer = new WebServer(port);
 
@@ -67,11 +57,11 @@ public class WorkerNode {
 
 		try {
 
-			Thread.sleep(random * 1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
 
-		return i1 + i2 + 10 + random * 1000;
+		return i1 + i2 + 10;
 	}
 }
