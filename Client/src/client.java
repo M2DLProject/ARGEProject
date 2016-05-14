@@ -12,6 +12,7 @@ public class client {
 
 	public static XmlRpcClient client;
 	public static AsyncCallback async;
+	private static String myIp = "192.168.0.184";
 
 	public static void main(String[] args) throws Exception {
 
@@ -56,8 +57,7 @@ public class client {
 		while (true) {
 			for (int i = 0; i < calls; i++) {
 				call();
-				u++;
-				System.out.println(u);
+
 			}
 			try {
 				Thread.sleep(1000);
@@ -70,10 +70,10 @@ public class client {
 	public static void call() {
 
 		// make the a regular call
-		Object[] params = new Object[] { new String("add"), new Integer(2), new Integer(3) };
+		Object[] params = new Object[] { new String("add"), new Integer(2), new Integer(3), myIp };
 		Integer result = null;
 		try {
-			client.executeAsync("Repartiteur.call", params, async);
+			client.executeAsync("Repartiteur.call", params, null);
 
 		} catch (XmlRpcException e) {
 			// TODO Auto-generated catch block
@@ -81,5 +81,9 @@ public class client {
 		}
 
 		// System.out.println("2 + 3 = " + result);
+	}
+
+	public void recive(int i) {
+		System.out.println("result = " + i);
 	}
 }
