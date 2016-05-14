@@ -87,13 +87,24 @@ public class Orchestrator {
 			}
 
 			Double total = 0D;
-			int nbConnexionMax = 5;
+			//int nbConnexionMax = 5;
 			System.out.println("Scan...");
 			for (String ip : workerNodes) {
 
 				Double count = getSystemCPU(ip, "8080");
 				System.out.println(ip + " : " + count);
 				total = total + count;
+			}
+			
+			if(total/10 > 75){
+				String repartiteurIP = "192.168.0.180";
+				String repartiteurP = "8081";
+				Map<String, String> params = createVM();
+				System.out.println("VM IP: " + params.get("ip"));
+				System.out.println("VM PORT: " + params.get("port"));
+				update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
+				} else { 
+					//Supprime VM }
 			}
 			/*
 			 * if (total / workerNodes.size() > nbConnexionMax) { String
