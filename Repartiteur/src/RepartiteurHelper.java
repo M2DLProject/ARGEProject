@@ -147,9 +147,9 @@ public class RepartiteurHelper {
 		System.out.println("boucle de verif de delWN");
 		
 		for (int i = 0; i < workerNodes.size(); i++) {
-			worker = workerNodes.get(i);
 			if (worker.getIp().equals(ip) && worker.getPort().equals(port)) {
 				idToDelete = i;
+				worker = workerNodes.get(i);
 
 			}
 		}
