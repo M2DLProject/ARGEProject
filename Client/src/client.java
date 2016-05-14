@@ -64,7 +64,7 @@ public class client {
 		Object[] params = new Object[] { new String("add"), new Integer(2), new Integer(3) };
 		Integer result = null;
 		try {
-			client.executeAsync("Repartiteur.call", params, null);
+			client.executeAsync("Repartiteur.call", params, async);
 
 		} catch (XmlRpcException e) {
 			// TODO Auto-generated catch block
