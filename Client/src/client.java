@@ -70,10 +70,10 @@ public class client {
 	public static void call() {
 
 		// make the a regular call
-		Object[] params = new Object[] { new String("add"), new Integer(2), new Integer(3), myIp };
+		Object[] params = new Object[] { new String("add"), new Integer(2), new Integer(3) };
 		Integer result = null;
 		try {
-			client.executeAsync("Repartiteur.call", params, null);
+			client.executeAsync("Repartiteur.call", params, async);
 
 		} catch (XmlRpcException e) {
 			// TODO Auto-generated catch block

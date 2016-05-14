@@ -63,23 +63,6 @@ public class RepartiteurHelper {
 		WorkerNode freeWN = null;
 		// while(connection >= 10){
 
-		while (freeWN == null) {
-			count++;
-
-			freeWN = getFreeWN();
-			Double cpu = null;
-			try {
-				cpu = getSystemCPU(freeWN.getIp(), freeWN.getPort());
-			} catch (Exception e) {
-			}
-			// }
-			if (cpu > 80) {
-				freeWN = null;
-				System.out.println("ok");
-			}
-
-		}
-
 		return freeWN;
 	}
 

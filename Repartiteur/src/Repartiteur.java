@@ -42,11 +42,11 @@ public class Repartiteur {
 
 	}
 
-	public void call(String method, int i1, int i2, String ipBack) throws MalformedURLException, XmlRpcException {
+	public int call(String method, int i1, int i2, String ipBack) throws MalformedURLException, XmlRpcException {
 
 		// make the a regular call
-		Object[] params = new Object[] { new Integer(i1), new Integer(i2), ipBack };
-		repartiteurHelper.callMethod(method, params);
+		Object[] params = new Object[] { new Integer(i1), new Integer(i2) };
+		return repartiteurHelper.callMethod(method, params);
 
 	}
 
