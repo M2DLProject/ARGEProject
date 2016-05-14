@@ -9,7 +9,7 @@ import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
 
 public class WorkerNode {
 
-	private XmlRpcClient client;
+	private static XmlRpcClient client;
 
 	private String ip = "0";
 
@@ -61,7 +61,7 @@ public class WorkerNode {
 
 	}
 
-	public void callMethod(String method, Object[] params, AsyncCallback async) {
+	public static void callMethod(String method, Object[] params, AsyncCallback async) {
 
 		Integer result = 0;
 
