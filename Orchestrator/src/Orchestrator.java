@@ -103,7 +103,7 @@ public class Orchestrator {
 			 * "VM IP: " + params.get("ip")); System.out.println("VM PORT: " +
 			 * params.get("port")); update_repartiteur.addWN(repartiteurIP,
 			 * repartiteurP, params.get("ip"), params.get("port")); } else { //
-			 * Supprimé VM }
+			 * Supprime VM }
 			 */
 
 		}
