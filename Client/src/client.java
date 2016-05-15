@@ -41,7 +41,7 @@ public class client {
 
 			public void handleResult(XmlRpcRequest arg0, Object arg1) {
 				// TODO Auto-generated method stub
-				// System.out.println("[" + calls + "] 2 +3 = " + arg1);
+				System.out.println("[" + calls + "] 2 +3 = " + arg1);
 				return;
 			}
 
