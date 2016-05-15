@@ -71,19 +71,19 @@ public class client {
 			if (bufferedReader.ready()) {
 				inputR = bufferedReader.readLine();
 				if (inputR.equals("a")) {
-					calls = 1000;
+					calls = 100;
 				}
 				if (inputR.equals("z")) {
-					calls = 2000;
+					calls = 1000;
 				}
 				if (inputR.equals("e")) {
-					calls = 30000;
+					calls = 2000;
 				}
 				if (inputR.equals("r")) {
-					calls = 4000;
+					calls = 3000;
 				}
 				if (inputR.equals("t")) {
-					calls = 5000;
+					calls = 4000;
 				}
 				if (inputR.equals("y")) {
 					calls = 6000;
