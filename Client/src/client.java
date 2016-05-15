@@ -74,19 +74,19 @@ public class client {
 					calls = 1000;
 				}
 				if (inputR.equals("z")) {
-					calls = 10000;
+					calls = 2000;
 				}
 				if (inputR.equals("e")) {
 					calls = 30000;
 				}
 				if (inputR.equals("r")) {
-					calls = 50000;
+					calls = 4000;
 				}
 				if (inputR.equals("t")) {
-					calls = 80000;
+					calls = 5000;
 				}
 				if (inputR.equals("y")) {
-					calls = 200000;
+					calls = 6000;
 				}
 				System.out.println("Update calls to " + calls);
 			}
