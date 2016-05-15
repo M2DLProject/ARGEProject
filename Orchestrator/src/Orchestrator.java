@@ -209,8 +209,8 @@ public class Orchestrator {
 
 			BufferedReader br = new BufferedReader(new FileReader(file));
 
-			ipClient = br.readLine();
 			ipRepartitor = br.readLine();
+			ipClient = br.readLine();
 
 			System.out.println("Load DB...");
 			System.out.println("Client = " + ipClient);
@@ -235,8 +235,9 @@ public class Orchestrator {
 
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(ipClient + "\n");
 			bw.write(ipRepartitor + "\n");
+			bw.write(ipClient + "\n");
+
 			bw.close();
 
 		} catch (IOException e) {
