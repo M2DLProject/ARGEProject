@@ -1,7 +1,13 @@
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Scanner;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.XmlRpcRequest;
@@ -14,18 +20,78 @@ public class client {
 
 	public static XmlRpcClient client;
 	public static AsyncCallback async;
-	private static String myIp = "192.168.0.184";
-	public static Integer calls = 0;
+
+	public static Integer calls = 100;
+	public static String ipRepartitor = "";
+
+	public synchronized static void loadWNBase() {
+
+		try {
+
+			File file = new File("db.data");
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			BufferedReader br = new BufferedReader(new FileReader(file));
+
+			ipRepartitor = br.readLine();
+
+			System.out.println("Load DB...");
+			System.out.println("Repartitor = " + ipRepartitor);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public synchronized static void updateWNBase() {
+
+		try {
+
+			File file = new File("db.data");
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(ipRepartitor + "\n");
+			bw.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 	public static void main(String[] args) throws Exception {
 
-		calls = Integer.parseInt(args[0]);
-		String ip = args[1];
-		String port = args[2];
+		// calls = Integer.parseInt(args[0]);
+		// String ip = args[1];
+		// String port = args[2];
+		loadWNBase();
+
+		String port = "8080";
+
+		System.out.println("What repartitor ip ? ( Type 'd' to use '" + ipRepartitor + "' )");
+		Scanner reader = new Scanner(System.in);
+		String n = reader.next();
+
+		if (!n.equals("d")) {
+			ipRepartitor = n;
+			updateWNBase();
+		}
+		System.out.println("Repartitor ip = " + ipRepartitor);
 
 		// create configuration
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-		config.setServerURL(new URL("http://" + ip + ":" + port + "/xmlrpc"));
+		config.setServerURL(new URL("http://" + ipRepartitor + ":" + port + "/xmlrpc"));
 		config.setEnabledForExtensions(true);
 		config.setConnectionTimeout(60 * 1000);
 		config.setReplyTimeout(60 * 1000);
@@ -55,7 +121,6 @@ public class client {
 		};
 
 		System.out.println("=======================");
-		System.out.println("Client call " + calls + " : " + ip + " " + port);
 
 		InputStreamReader fileInputStream = new InputStreamReader(System.in);
 		BufferedReader bufferedReader = new BufferedReader(fileInputStream);
