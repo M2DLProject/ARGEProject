@@ -407,7 +407,7 @@ public class Orchestrator {
 		}
 		config.setEnabledForExtensions(true);
 		config.setConnectionTimeout(1000);
-		config.setEnabledForExceptions(false);
+		config.setEnabledForExceptions(true);
 
 		XmlRpcClient client = new XmlRpcClient();
 
@@ -418,6 +418,7 @@ public class Orchestrator {
 		Integer result = 0;
 		Object[] params = new Object[] {};
 		System.out.print("...");
+
 		try {
 			result = (Integer) client.execute("Calculator.status", params);
 
