@@ -57,7 +57,7 @@ public class WorkerNode {
 
 		try {
 
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
