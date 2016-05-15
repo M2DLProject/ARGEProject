@@ -104,7 +104,7 @@ public class Orchestrator {
 				}
 			}
 			// Test besoin d'une machine ou trop de machine
-			if (total / workerNodes.size() > 75) {
+			if (total / workerNodes.size() > 45) {
 
 				Map<String, String> params = createVM();
 				System.out.println("VM IP: " + params.get("ip"));
