@@ -217,7 +217,8 @@ public class Orchestrator {
 			if (servers.get(it).getAddresses().getAddresses().toString().contains(ip)) {
 				String wNodeId = servers.get(it).getId();
 				String name = servers.get(it).getName();
-				os.compute().servers().delete(wNodeId);
+				//os.compute().servers().delete(wNodeId);
+				System.out.println("WorkerNode id = "+ wNodeId);
 				System.out.println("Delete VM : " + name);
 				isFound = true;
 			}
