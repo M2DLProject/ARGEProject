@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,11 +31,19 @@ public class Orchestrator {
 
 	public static List<String> workerNodes = new ArrayList<String>();
 
+	public static String imageMaster = "66cbff80-e4f4-422d-81e2-a39691cab639";
+	public static String imageWN = "66cbff80-e4f4-422d-81e2-a39691cab639";
+
+	public static String ipRepartitor = "";
+	public static String ipClient = "";
+
 	public static void main(String[] args) throws Exception {
 
 		System.out.println("-----------------------------------------");
 		System.out.println("ORCHESTRATOR");
 		System.out.println("-----------------------------------------");
+		loadWNBase();
+
 		os = connnexionCloudMip();
 		System.out.println("");
 		System.out.println("1) Manual");
@@ -86,7 +100,7 @@ public class Orchestrator {
 			} catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
 			}
-			String repartiteurIP = "192.168.0.180";
+			String repartiteurIP = ipRepartitor;
 			String repartiteurP = "8081";
 			Double total = 0D;
 			String ipLessCharged = null;
@@ -164,17 +178,92 @@ public class Orchestrator {
 		}
 	}
 
+	public static void init() {
+		try {
+			System.out.println("Repartitor creation...");
+			Map<String, String> params = createMasterVM("doom_repartitorVM");
+			ipRepartitor = params.get("ip");
+			System.out.println("Repartitor created  at : " + ipRepartitor);
+
+			System.out.println("Client creation...");
+			params = createMasterVM("doom_clientVM");
+			ipClient = params.get("ip");
+			System.out.println("Client created at : " + ipClient);
+
+			updateWNBase();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public synchronized static void loadWNBase() {
+
+		try {
+
+			File file = new File("db.data");
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			BufferedReader br = new BufferedReader(new FileReader(file));
+
+			ipClient = br.readLine();
+			ipRepartitor = br.readLine();
+
+			System.out.println("Load DB...");
+			System.out.println("Client = " + ipClient);
+			System.out.println("Repartitor = " + ipRepartitor);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public synchronized static void updateWNBase() {
+
+		try {
+
+			File file = new File("db.data");
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(ipClient + "\n");
+			bw.write(ipRepartitor + "\n");
+			bw.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	public static void manuel() throws Exception {
 		System.out.println("# MANUAL");
-		System.out.println("1) add VM");
-		System.out.println("2) delete VM");
-		System.out.println("3) servers list");
-		System.out.println("4) Restart Repartiteur (XMLRPC)");
-		System.out.println("5) Delete all workernodes");
-		System.out.println("6) Get status");
+		System.out.println("0) Init");
+		System.out.println("1) Add VM");
+		System.out.println("2) Delete VM");
+		System.out.println("3) VM list");
+		System.out.println("4) Scan Machines CPU");
+		System.out.println("5) Restart");
+		System.out.println("6) Check if machine is ready");
+
 		System.out.print("What ? ");
 		Scanner scanner = new Scanner(System.in);
 		int n = scanner.nextInt();
+
+		if (n == 0) {
+			System.out.println("Init system...");
+			init();
+		}
 
 		if (n == 1) {
 
@@ -211,15 +300,24 @@ public class Orchestrator {
 		}
 
 		if (n == 4) {
-			update_repartiteur.restartRepartiteur("192.168.0.180", "8081");
+
+			for (int i = 0; i <= 5; i++) {
+				System.out.print("SCAN... ");
+				for (String ip : workerNodes) {
+					Double count = getSystemCPU(ip, "8080");
+					System.out.println(ip + " : " + count);
+				}
+
+			}
 		}
 
 		if (n == 5) {
 			deleteAllWN();
+			update_repartiteur.restartRepartiteur("192.168.0.180", "8081");
 		}
 
 		if (n == 6) {
-			System.out.print("IP to delete? ");
+			System.out.print("IP? ");
 			String ip = scanner.next();
 			System.out.println(checkWNisReady(ip, "8080"));
 		}
@@ -327,6 +425,43 @@ public class Orchestrator {
 
 	}
 
+	public static Map<String, String> createMasterVM(String name) throws MalformedURLException {
+
+		// Create VM
+		System.out.print("Create VM...");
+		List<String> network = new ArrayList<>();
+		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
+
+		ServerCreate serverCreate = Builders.server().name(name).flavor("2").image(imageMaster).networks(network)
+				.build();
+
+		System.out.println("OK");
+
+		System.out.print("Boot VM...");
+		Server server = os.compute().servers().boot(serverCreate);
+		while (!os.compute().servers().get(server.getId()).getStatus().equals(Status.ACTIVE)) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		System.out.println("OK");
+
+		server = os.compute().servers().get(server.getId());
+
+		String ip = getServerIP(server, TypeIP.Private);
+
+		Map<String, String> result = new HashMap<String, String>();
+		String port = "8080";
+		result.put("port", port);
+		result.put("ip", ip);
+
+		return result;
+
+	}
+
 	public static Map<String, String> createVM() throws MalformedURLException {
 
 		// Create VM
@@ -334,12 +469,8 @@ public class Orchestrator {
 		List<String> network = new ArrayList<>();
 		network.add("c1445469-4640-4c5a-ad86-9c0cb6650cca");
 
-		// ServerCreate serverCreate = Builders.server().name("doom_WN_" + new
-		// Date().getTime()).flavor("2")
-		// .image("545f176d-54f8-4bad-93f2-a285870482f4").networks(network).build();
-
-		ServerCreate serverCreate = Builders.server().name("doom_WN_" + new Date().getTime()).flavor("2")
-				.image("66cbff80-e4f4-422d-81e2-a39691cab639").networks(network).build();
+		ServerCreate serverCreate = Builders.server().name("doom_WN_" + new Date().getTime()).flavor("2").image(imageWN)
+				.networks(network).build();
 
 		System.out.println("OK");
 
