@@ -15,10 +15,11 @@ public class client {
 	public static XmlRpcClient client;
 	public static AsyncCallback async;
 	private static String myIp = "192.168.0.184";
+	public static Integer calls = 0;
 
 	public static void main(String[] args) throws Exception {
 
-		Integer calls = Integer.parseInt(args[0]);
+		calls = Integer.parseInt(args[0]);
 		String ip = args[1];
 		String port = args[2];
 
@@ -40,7 +41,7 @@ public class client {
 
 			public void handleResult(XmlRpcRequest arg0, Object arg1) {
 				// TODO Auto-generated method stub
-				System.out.println("2 +3 = " + arg1);
+				System.out.println("[" + calls + "] 2 +3 = " + arg1);
 				return;
 			}
 
