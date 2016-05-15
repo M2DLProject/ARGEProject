@@ -73,8 +73,11 @@ public class client {
 				if (inputR.equals("a")) {
 					calls = 1000;
 				}
-				if (inputR.equals("b")) {
+				if (inputR.equals("z")) {
 					calls = 10000;
+				}
+				if (inputR.equals("e")) {
+					calls = 30000;
 				}
 				System.out.println("Update calls to " + calls);
 			}
