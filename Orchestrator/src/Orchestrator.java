@@ -110,7 +110,7 @@ public class Orchestrator {
 				System.out.println("VM IP: " + params.get("ip"));
 				System.out.println("VM PORT: " + params.get("port"));
 				update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
-				isWMRecentlyCreated = 5;
+				isWMRecentlyCreated = 10;
 				
 			} else {
 
