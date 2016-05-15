@@ -1,4 +1,6 @@
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URL;
 
 import org.apache.xmlrpc.XmlRpcException;
@@ -53,17 +55,35 @@ public class client {
 
 		System.out.println("=======================");
 		System.out.println("Client call " + calls + " : " + ip + " " + port);
-		int u = 0;
+
+		InputStreamReader fileInputStream = new InputStreamReader(System.in);
+		BufferedReader bufferedReader = new BufferedReader(fileInputStream);
+
+		String inputR = "";
 		while (true) {
+
 			for (int i = 0; i < calls; i++) {
 				call();
-
 			}
+
+			// update calls
+			if (bufferedReader.ready()) {
+				inputR = bufferedReader.readLine();
+				if (inputR.equals("a")) {
+					calls = 1000;
+				}
+				if (inputR.equals("b")) {
+					calls = 10000;
+				}
+				System.out.println("Update calls to " + calls);
+			}
+
 			try {
 				Thread.sleep(1000);
 			} catch (Exception e) {
 
 			}
+
 		}
 	}
 
@@ -71,7 +91,7 @@ public class client {
 
 		// make the a regular call
 		Object[] params = new Object[] { new String("add"), new Integer(2), new Integer(3) };
-		Integer result = null;
+
 		try {
 			client.executeAsync("Repartiteur.call", params, async);
 
