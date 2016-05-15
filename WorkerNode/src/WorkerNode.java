@@ -14,6 +14,16 @@ public class WorkerNode {
 
 	private static final int port = 8080;
 
+	public static Integer counter = 0;
+
+	public static synchronized void setCounter(int value) {
+		counter = counter + value;
+	}
+
+	public int getCounter() {
+		return counter;
+	}
+
 	public static void main(String[] args) throws Exception {
 
 		System.out.println("Worker starting...");
@@ -55,12 +65,16 @@ public class WorkerNode {
 
 	public int add(int i1, int i2) {
 
+		setCounter(1);
+
 		try {
 
 			Thread.sleep(5000);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
+
+		setCounter(-1);
 
 		return i1 + i2 + 10;
 	}

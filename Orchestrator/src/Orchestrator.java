@@ -123,7 +123,7 @@ public class Orchestrator {
 					// wait le temps total d un calcul WN
 					// (depend du random pour le moment entre 1 et 10?)
 					// pour ne pas perdre les derniers appels clients
-					Thread.sleep(3000);
+					waitVMReadyToDelete(ipLessCharged, "8080");
 					deleteVM(ipLessCharged);
 				}
 			}
@@ -133,6 +133,35 @@ public class Orchestrator {
 
 		}
 
+	}
+
+	public static void waitVMReadyToDelete(String ip, String port) {
+		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+		try {
+			config.setServerURL(new URL("http://" + ip + ":" + port + "/xmlrpc"));
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		config.setEnabledForExtensions(true);
+		config.setConnectionTimeout(1000);
+
+		XmlRpcClient client = new XmlRpcClient();
+
+		// use Commons HttpClient as transport
+		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
+		client.setConfig(config);
+
+		Integer result = 1;
+		Object[] params = new Object[] {};
+		while (result > 0) {
+
+			try {
+				result = (Integer) client.execute("Calculator.getCounter", params);
+			} catch (Exception e) {
+			}
+
+		}
 	}
 
 	public static void manuel() throws Exception {
