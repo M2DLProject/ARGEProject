@@ -398,12 +398,16 @@ public class Orchestrator {
 
 	}
 
-	public static Boolean checkWNisReady(String ip, String port) throws MalformedURLException {
+	public static Boolean checkWNisReady(String ip, String port) {
 
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-		config.setServerURL(new URL("http://" + ip + ":" + port + "/xmlrpc"));
+		try {
+			config.setServerURL(new URL("http://" + ip + ":" + port + "/xmlrpc"));
+		} catch (MalformedURLException e1) {
+		}
 		config.setEnabledForExtensions(true);
 		config.setConnectionTimeout(1000);
+		config.setEnabledForExceptions(false);
 
 		XmlRpcClient client = new XmlRpcClient();
 
@@ -479,7 +483,7 @@ public class Orchestrator {
 		Server server = os.compute().servers().boot(serverCreate);
 		while (!os.compute().servers().get(server.getId()).getStatus().equals(Status.ACTIVE)) {
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
