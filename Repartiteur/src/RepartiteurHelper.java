@@ -31,32 +31,6 @@ public class RepartiteurHelper {
 
 	}
 
-	public static double getSystemCPU(String ipR, String portR) throws Exception {
-
-		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-
-		config.setServerURL(new URL("http://" + ipR + ":" + portR + "/xmlrpc"));
-		config.setEnabledForExtensions(true);
-		config.setConnectionTimeout(60 * 1000);
-		config.setReplyTimeout(60 * 1000);
-
-		XmlRpcClient client = new XmlRpcClient();
-
-		// use Commons HttpClient as transport
-		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
-		// set configuration
-		client.setConfig(config);
-
-		Object[] params = new Object[] {};
-		double result = 0;
-		try {
-			result = (double) client.execute("Calculator.getSystemCPU", params);
-		} catch (XmlRpcException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
 	public synchronized WorkerNode getWN() {
 
 		// Integer connection = 11;
@@ -71,7 +45,7 @@ public class RepartiteurHelper {
 		WorkerNode lastVM = getWN();
 		// wait until worker is ready
 		// System.out.println("vm " + workerNodes.indexOf(lastVM));
-		//System.out.println("Repartiteur is call!");
+		System.out.println("Repartiteur is call!");
 		Integer result = lastVM.callMethod(method, params);
 
 		return result;
@@ -145,7 +119,7 @@ public class RepartiteurHelper {
 		Integer idToDelete = null;
 		WorkerNode workerToDelete = null;
 		System.out.println("boucle de verif de delWN");
-		
+
 		for (int i = 0; i < workerNodes.size(); i++) {
 			WorkerNode worker = workerNodes.get(i);
 			if (worker.getIp().equals(ip) && worker.getPort().equals(port)) {
