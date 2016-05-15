@@ -85,6 +85,9 @@ public class client {
 				if (inputR.equals("t")) {
 					calls = 80000;
 				}
+				if (inputR.equals("y")) {
+					calls = 200000;
+				}
 				System.out.println("Update calls to " + calls);
 			}
 
