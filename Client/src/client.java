@@ -92,7 +92,7 @@ public class client {
 			}
 
 			try {
-				Thread.sleep(980);
+				Thread.sleep(1000);
 			} catch (Exception e) {
 
 			}
