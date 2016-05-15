@@ -103,12 +103,14 @@ public class Orchestrator {
 					chargeMin = count;
 				}
 			}
+			System.out.println("IsrecentlyCreated : "+ isWMRecentlyCreated);
 			// Test besoin d'une machine ou trop de machine
 			if (total / workerNodes.size() > 55) {
 
 				Map<String, String> params = createVM();
 				System.out.println("VM IP: " + params.get("ip"));
 				System.out.println("VM PORT: " + params.get("port"));
+				System.out.println("IsrecentlyCreated : "+ isWMRecentlyCreated);
 				update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
 				isWMRecentlyCreated = 10;
 				
