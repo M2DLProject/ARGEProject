@@ -78,7 +78,7 @@ public class Orchestrator {
 		System.out.println("#AUTO");
 		getAllWN();
 		int isWMRecentlyCreated = 0;
-		
+
 		while (true) {
 
 			try {
@@ -103,17 +103,17 @@ public class Orchestrator {
 					chargeMin = count;
 				}
 			}
-			System.out.println("IsrecentlyCreated : "+ isWMRecentlyCreated);
+			System.out.println("IsrecentlyCreated : " + isWMRecentlyCreated);
 			// Test besoin d'une machine ou trop de machine
-			if (total / workerNodes.size() > 55) {
+			if (total / workerNodes.size() > 55 && isWMRecentlyCreated == 0) {
 
 				Map<String, String> params = createVM();
 				System.out.println("VM IP: " + params.get("ip"));
 				System.out.println("VM PORT: " + params.get("port"));
-				System.out.println("IsrecentlyCreated : "+ isWMRecentlyCreated);
+				System.out.println("IsrecentlyCreated : " + isWMRecentlyCreated);
 				update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
 				isWMRecentlyCreated = 10;
-				
+
 			} else {
 
 				if (workerNodes.size() > 1 && total / workerNodes.size() < 15 && isWMRecentlyCreated == 0) {
@@ -127,8 +127,8 @@ public class Orchestrator {
 					deleteVM(ipLessCharged);
 				}
 			}
-			if(isWMRecentlyCreated != 0){
-				isWMRecentlyCreated --;
+			if (isWMRecentlyCreated != 0) {
+				isWMRecentlyCreated--;
 			}
 
 		}
@@ -216,11 +216,11 @@ public class Orchestrator {
 		boolean isFound = false;
 		int it = 0;
 		while (!isFound && it < servers.size()) {
-			if (servers.get(it).getAddresses().getAddresses().toString().contains(ip+",")) {
+			if (servers.get(it).getAddresses().getAddresses().toString().contains(ip + ",")) {
 				String wNodeId = servers.get(it).getId();
 				String name = servers.get(it).getName();
 				os.compute().servers().delete(wNodeId);
-				System.out.println("WorkerNode id = "+ wNodeId);
+				System.out.println("WorkerNode id = " + wNodeId);
 				System.out.println("Delete VM : " + name);
 				isFound = true;
 			}
@@ -261,7 +261,7 @@ public class Orchestrator {
 
 			if (server.getName().contains("doom_WN_")) {
 				String ip = getServerIP(server, TypeIP.Private);
-				System.out.println(server.getName() + " : "+ ip);
+				System.out.println(server.getName() + " : " + ip);
 				deleteVM(ip);
 			}
 
