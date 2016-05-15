@@ -85,6 +85,7 @@ public class Orchestrator {
 			} catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
 			}
+			int isWMRecentlyCreated = 0;
 			String repartiteurIP = "192.168.0.180";
 			String repartiteurP = "8081";
 			Double total = 0D;
@@ -109,7 +110,8 @@ public class Orchestrator {
 				System.out.println("VM IP: " + params.get("ip"));
 				System.out.println("VM PORT: " + params.get("port"));
 				update_repartiteur.addWN(repartiteurIP, repartiteurP, params.get("ip"), params.get("port"));
-
+				isWMRecentlyCreated = 5;
+				
 			} else {
 
 				if (workerNodes.size() > 1 && total / workerNodes.size() < 30) {
@@ -122,6 +124,9 @@ public class Orchestrator {
 					Thread.sleep(3000);
 					deleteVM(ipLessCharged);
 				}
+			}
+			if(isWMRecentlyCreated != 0){
+				isWMRecentlyCreated --;
 			}
 
 		}
