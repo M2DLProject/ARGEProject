@@ -77,7 +77,7 @@ public class client {
 		// String port = args[2];
 		loadWNBase();
 
-		String port = "8080";
+		String port = "8081";
 
 		System.out.println("What repartitor ip ? ( Type 'd' to use '" + ipRepartitor + "' )");
 		Scanner reader = new Scanner(System.in);
