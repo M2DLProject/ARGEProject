@@ -114,7 +114,7 @@ public class Orchestrator {
 				
 			} else {
 
-				if (workerNodes.size() > 1 && total / workerNodes.size() < 15) {
+				if (workerNodes.size() > 1 && total / workerNodes.size() < 15 && isWMRecentlyCreated == 0) {
 					// Suppression de la machine ipLessCharged
 					update_repartiteur.delWN(repartiteurIP, repartiteurP, ipLessCharged, "8080");
 					// temporaire il faudrait faire ca dans un thread a part qui
