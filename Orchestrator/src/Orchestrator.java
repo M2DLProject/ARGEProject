@@ -260,7 +260,7 @@ public class Orchestrator {
 			if (server.getName().contains("doom_WN_")) {
 				String ip = getServerIP(server, TypeIP.Private);
 				System.out.println(server.getName() + " : "+ ip);
-				//deleteVM(ip);
+				deleteVM(ip);
 			}
 
 			it++;
