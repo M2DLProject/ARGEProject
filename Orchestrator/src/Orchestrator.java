@@ -215,6 +215,7 @@ public class Orchestrator {
 		int it = 0;
 		while (!isFound && it < servers.size()) {
 			if (servers.get(it).getAddresses().getAddresses().toString().contains(ip)) {
+				System.out.println("liste des adresses : "+ servers.get(it).getAddresses().getAddresses().toString());
 				String wNodeId = servers.get(it).getId();
 				String name = servers.get(it).getName();
 				//os.compute().servers().delete(wNodeId);
