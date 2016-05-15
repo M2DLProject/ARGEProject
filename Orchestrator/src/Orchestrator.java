@@ -77,7 +77,8 @@ public class Orchestrator {
 
 		System.out.println("#AUTO");
 		getAllWN();
-
+		int isWMRecentlyCreated = 0;
+		
 		while (true) {
 
 			try {
@@ -85,7 +86,6 @@ public class Orchestrator {
 			} catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
 			}
-			int isWMRecentlyCreated = 0;
 			String repartiteurIP = "192.168.0.180";
 			String repartiteurP = "8081";
 			Double total = 0D;
