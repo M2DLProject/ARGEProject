@@ -1,4 +1,4 @@
-git pull
+sudo git pull
 mkdir -p bin
 rm -R -- bin/*
 javac -cp "libs/*" src/* -d bin
