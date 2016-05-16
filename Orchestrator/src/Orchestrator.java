@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -43,6 +45,8 @@ public class Orchestrator {
 		System.out.println("ORCHESTRATOR");
 		System.out.println("-----------------------------------------");
 		loadWNBase();
+
+		Logger.getLogger("log4j.rootLogger").setLevel(Level.OFF);
 
 		os = connnexionCloudMip();
 		menu();
