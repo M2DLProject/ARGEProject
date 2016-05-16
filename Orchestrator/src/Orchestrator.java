@@ -422,7 +422,6 @@ public class Orchestrator {
 		}
 		config.setEnabledForExtensions(true);
 		config.setConnectionTimeout(1000);
-		config.setReplyTimeout(15000);
 
 		XmlRpcClient client = new XmlRpcClient();
 
