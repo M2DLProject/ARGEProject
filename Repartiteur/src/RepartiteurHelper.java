@@ -43,13 +43,12 @@ public class RepartiteurHelper {
 	public Integer callMethod(String method, Object[] params) {
 
 		WorkerNode lastVM = getWN();
-		// wait until worker is ready
-		// System.out.println("vm " + workerNodes.indexOf(lastVM));
+
 		System.out.println("Call : " + lastVM.getIp() + " " + lastVM.getPort());
 		Integer result = lastVM.callMethod(method, params);
 
 		return result;
-		// lastVM.removeCharge();
+
 	}
 
 	public synchronized void loadWNBase() {
@@ -82,7 +81,7 @@ public class RepartiteurHelper {
 	public synchronized void updateWNBase() {
 
 		try {
-			System.out.println("Entree dans la fonction updateBD");
+
 			File file = new File("dbWN.data");
 
 			if (!file.exists()) {
@@ -96,7 +95,7 @@ public class RepartiteurHelper {
 
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
-			System.out.println("Contenu du bw : " + content);
+
 			bw.write(content);
 			bw.close();
 
@@ -118,7 +117,6 @@ public class RepartiteurHelper {
 	public synchronized void delWN(String ip, String port) {
 		Integer idToDelete = null;
 		WorkerNode workerToDelete = null;
-		System.out.println("boucle de verif de delWN");
 
 		for (int i = 0; i < workerNodes.size(); i++) {
 			WorkerNode worker = workerNodes.get(i);
@@ -128,11 +126,11 @@ public class RepartiteurHelper {
 
 			}
 		}
-		System.out.println("le worker node a delete est : " + idToDelete);
+
 		if (idToDelete != null) {
-			System.out.println("La taille de la liste avant remove est : " + workerNodes.size());
+
 			workerNodes.remove(workerToDelete);
-			System.out.println("La taille de la liste apres remove est : " + workerNodes.size());
+
 			updateWNBase();
 		}
 

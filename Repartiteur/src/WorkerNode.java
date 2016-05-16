@@ -73,8 +73,4 @@ public class WorkerNode {
 
 	}
 
-	public Boolean isCPUisOverload() {
-		return charge > 2;
-	}
-
 }

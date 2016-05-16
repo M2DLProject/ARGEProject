@@ -48,6 +48,7 @@ public class Orchestrator {
 		System.out.println("");
 		System.out.println("1) Manual");
 		System.out.println("2) Auto");
+		System.out.println("3) Exit");
 		System.out.println("Mode ?");
 		Scanner reader = new Scanner(System.in);
 		int n = reader.nextInt();
@@ -58,6 +59,8 @@ public class Orchestrator {
 		if (n == 2) {
 			auto();
 		}
+
+		System.out.println("Thanks for using!");
 
 	}
 
@@ -105,7 +108,7 @@ public class Orchestrator {
 			Double total = 0D;
 			String ipLessCharged = null;
 			Double chargeMin = 100D;
-			// int nbConnexionMax = 5;
+
 			System.out.println("Scan...");
 			for (String ip : workerNodes) {
 				Double count = getSystemCPU(ip, "8080");
@@ -131,12 +134,9 @@ public class Orchestrator {
 			} else {
 
 				if (workerNodes.size() > 1 && total / workerNodes.size() < 15 && isWMRecentlyCreated == 0) {
-					// Suppression de la machine ipLessCharged
+
 					update_repartiteur.delWN(repartiteurIP, repartiteurP, ipLessCharged, "8080");
-					// temporaire il faudrait faire ca dans un thread a part qui
-					// wait le temps total d un calcul WN
-					// (depend du random pour le moment entre 1 et 10?)
-					// pour ne pas perdre les derniers appels clients
+
 					waitVMReadyToDelete(ipLessCharged, "8080");
 					deleteVM(ipLessCharged);
 				}
@@ -162,7 +162,6 @@ public class Orchestrator {
 
 		XmlRpcClient client = new XmlRpcClient();
 
-		// use Commons HttpClient as transport
 		client.setTransportFactory(new XmlRpcCommonsTransportFactory(client));
 		client.setConfig(config);
 
@@ -183,15 +182,17 @@ public class Orchestrator {
 			System.out.println("Repartitor creation...");
 			Map<String, String> params = createMasterVM("doom_repartitorVM");
 			ipRepartitor = params.get("ip");
-			System.out.println("Repartitor created  at : " + ipRepartitor);
+			System.out.println("Repartitor created  at : " + ipRepartitor + "(doom_repartitorVM)");
 
 			System.out.println("Client creation...");
 			params = createMasterVM("doom_clientVM");
 			ipClient = params.get("ip");
-			System.out.println("Client created at : " + ipClient);
+			System.out.println("Client created at : " + ipClient + "(doom_clientVM)");
 
 			updateWNBase();
 
+			System.out.println("Info: Il vous faut associer une adresse publique à ces deux machines manuellemet.");
+			System.out.println("Info: Puis vous connecter dessus afin de lancer le répartiteur et le client.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -256,6 +257,7 @@ public class Orchestrator {
 		System.out.println("4) Scan Machines CPU");
 		System.out.println("5) Restart");
 		System.out.println("6) Check if machine is ready");
+		System.out.println("7) Return to Menu");
 
 		System.out.print("What ? ");
 		Scanner scanner = new Scanner(System.in);
@@ -307,6 +309,11 @@ public class Orchestrator {
 				for (String ip : workerNodes) {
 					Double count = getSystemCPU(ip, "8080");
 					System.out.println(ip + " : " + count);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException ex) {
+						Thread.currentThread().interrupt();
+					}
 				}
 
 			}
@@ -321,6 +328,10 @@ public class Orchestrator {
 			System.out.print("IP? ");
 			String ip = scanner.next();
 			System.out.println(checkWNisReady(ip, "8080"));
+		}
+
+		if (n == 7) {
+			auto();
 		}
 
 		manuel();
@@ -348,7 +359,7 @@ public class Orchestrator {
 				String wNodeId = servers.get(it).getId();
 				String name = servers.get(it).getName();
 				os.compute().servers().delete(wNodeId);
-				System.out.println("WorkerNode id = " + wNodeId);
+				// System.out.println("WorkerNode id = " + wNodeId);
 				System.out.println("Delete VM : " + name);
 				isFound = true;
 			}
@@ -407,7 +418,7 @@ public class Orchestrator {
 		}
 		config.setEnabledForExtensions(true);
 		config.setConnectionTimeout(1000);
-		config.setEnabledForExceptions(true);
+		config.setReplyTimeout(15000);
 
 		XmlRpcClient client = new XmlRpcClient();
 
@@ -504,9 +515,7 @@ public class Orchestrator {
 		System.out.print("Boot Worker Node...");
 		try {
 			while (!checkWNisReady(ip, port)) {
-
 				Thread.sleep(2000);
-
 			}
 		} catch (Exception e) {
 			// e.printStackTrace();

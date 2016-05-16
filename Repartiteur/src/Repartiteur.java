@@ -23,9 +23,6 @@ public class Repartiteur {
 
 		PropertyHandlerMapping phm = new PropertyHandlerMapping();
 
-		/*
-		 * You may also provide the handler classes directly, like this:
-		 */
 		repartiteurHelper = new RepartiteurHelper();
 		System.out.println("Loading DB...");
 		repartiteurHelper.loadWNBase();
