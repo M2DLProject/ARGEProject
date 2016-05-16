@@ -31,7 +31,7 @@ public class Orchestrator {
 
 	public static List<String> workerNodes = new ArrayList<String>();
 
-	public static String imageMaster = "66cbff80-e4f4-422d-81e2-a39691cab639";
+	public static String imageMaster = "baf8dbc4-4fe6-4bf6-a4b3-49c1f74d521e";
 	public static String imageWN = "66cbff80-e4f4-422d-81e2-a39691cab639";
 
 	public static String ipRepartitor = "";
