@@ -45,6 +45,11 @@ public class Orchestrator {
 		loadWNBase();
 
 		os = connnexionCloudMip();
+		menu();
+
+	}
+
+	public static void menu() throws Exception {
 		System.out.println("");
 		System.out.println("1) Manual");
 		System.out.println("2) Auto");
@@ -61,7 +66,6 @@ public class Orchestrator {
 		}
 
 		System.out.println("Thanks for using!");
-
 	}
 
 	public static double getSystemCPU(String ipR, String portR) throws Exception {
@@ -331,7 +335,7 @@ public class Orchestrator {
 		}
 
 		if (n == 7) {
-			auto();
+			menu();
 		}
 
 		manuel();
