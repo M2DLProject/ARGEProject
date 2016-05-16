@@ -47,6 +47,7 @@ public class Orchestrator {
 		loadWNBase();
 
 		Logger.getLogger("log4j.rootLogger").setLevel(Level.OFF);
+		Logger.getLogger("org.apache.commons.httpclient.HttpMethodDirector").setLevel(Level.OFF);
 
 		os = connnexionCloudMip();
 		menu();
