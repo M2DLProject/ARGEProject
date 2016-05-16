@@ -312,7 +312,7 @@ public class Orchestrator {
 		}
 
 		if (n == 4) {
-
+			getAllWN();
 			for (int i = 0; i <= 5; i++) {
 				System.out.print("SCAN... ");
 				for (String ip : workerNodes) {
