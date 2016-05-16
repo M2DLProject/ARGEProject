@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -46,9 +44,7 @@ public class Orchestrator {
 		System.out.println("-----------------------------------------");
 		loadWNBase();
 
-		Logger.getLogger("ac.biu.nlp.nlp.engineml").setLevel(Level.OFF);
-		Logger.getLogger("org.BIU.utils.logging.ExperimentLogger").setLevel(Level.OFF);
-		Logger.getGlobal().setLevel(Level.OFF);
+		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
 
 		os = connnexionCloudMip();
 		menu();
