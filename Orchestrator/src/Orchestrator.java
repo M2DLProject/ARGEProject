@@ -46,8 +46,9 @@ public class Orchestrator {
 		System.out.println("-----------------------------------------");
 		loadWNBase();
 
-		Logger.getLogger("log4j.rootLogger").setLevel(Level.OFF);
-		Logger.getLogger("org.apache.commons.httpclient.HttpMethodDirector").setLevel(Level.OFF);
+		Logger.getLogger("ac.biu.nlp.nlp.engineml").setLevel(Level.OFF);
+		Logger.getLogger("org.BIU.utils.logging.ExperimentLogger").setLevel(Level.OFF);
+		Logger.getGlobal().setLevel(Level.OFF);
 
 		os = connnexionCloudMip();
 		menu();
@@ -69,8 +70,11 @@ public class Orchestrator {
 		if (n == 2) {
 			auto();
 		}
+		if (n == 3) {
+			System.out.println("Thanks for using!");
+			System.exit(1);
+		}
 
-		System.out.println("Thanks for using!");
 	}
 
 	public static double getSystemCPU(String ipR, String portR) throws Exception {
